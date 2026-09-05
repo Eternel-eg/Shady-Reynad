@@ -56,7 +56,7 @@
   /* 2. MAIN NAMES */
   .main-names {
     color: var(--ink-light);
-    font-size: 2.5cqh;
+    font-size: 2.2cqh;
     margin: 0;
     gap: 0.4cqh;
     display: flex;
@@ -71,6 +71,7 @@
 
   .main-names span:not(.amp) {
     letter-spacing: 0.12em;
+    margin-right: -0.12em; /* cancels the trailing letter-spacing so the ink centers correctly */
     display: inline-block;
   }
 
