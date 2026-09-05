@@ -175,11 +175,12 @@
     text-align: center;
     white-space: nowrap;
   }
+  .time-block-inner { display: inline-block; }
 
   /* RSVP & Location */
   .rsvp-location-block {
     position: absolute;
-    top: 69.4%;
+    top: 66.5%;
     left: 50%;
     transform: translateX(-50%);
     width: 78%;
@@ -368,7 +369,7 @@
   .card.full .main-names span:nth-child(3) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards, softShine 4.5s ease-in-out 3.2s infinite, shineSweep 6s ease-in-out 3.2s infinite; }
 
   .card.full .intro-block > *:nth-child(3) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 2.6s forwards, gentleFloat 5s ease-in-out 3.6s infinite; }
-  .card.full .time-block { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.0s forwards, gentleFloat 5s ease-in-out 4.0s infinite; }
+  .card.full .time-block-inner { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.0s forwards, gentleFloat 5s ease-in-out 4.0s infinite; }
   .card.full .rsvp-location-block > *:nth-child(1) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.4s forwards, gentleFloat 5s ease-in-out 4.4s infinite; }
   .card.full .rsvp-location-block > *:nth-child(2) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.7s forwards, breathePulse 3.6s ease-in-out 4.7s infinite; }
   .card.full .rsvp-location-block > *:nth-child(3) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.0s forwards, gentleFloat 5s ease-in-out 5.0s infinite; }
@@ -772,18 +773,18 @@
       <img class="cloud-overlay" src="image6.gif" alt="" aria-hidden="true">
 
       <div class="intro-block">
-        <div class="sub-text italic">Together with their families</div>
+        <div class="sub-text italic">&emsp;&emsp;Together with their families</div>
 
         <div class="main-names">
-          <span>Shady</span>
-          <span class="amp">&</span>
-          <span>Reynad</span>
+          <span>&emsp;Shady</span>
+          <span class="amp">&emsp;&</span>
+          <span>&emsp;Reynad</span>
         </div>
 
-        <div class="sub-text italic">invite you to celebrate</br>their wedding</div>
+        <div class="sub-text italic">&emsp;invite you to celebrate</br>&emsp;&emsp;their wedding</div>
       </div>
 
-      <div class="time-block date-time italic">at 5:00 PM</div>
+      <div class="time-block date-time italic"><span class="time-block-inner">at 5:00 PM</span></div>
 
       <div class="rsvp-location-block">
         <div class="venue-location">Le Passage Cairo Hotel <br> </div>
@@ -968,7 +969,7 @@
     const card = document.getElementById('card');
     card.classList.remove('full');
 
-    card.querySelectorAll('.intro-block > *, .time-block, .rsvp-location-block > *, .cloud-overlay, .main-names span').forEach(el => {
+    card.querySelectorAll('.intro-block > *, .time-block-inner, .rsvp-location-block > *, .cloud-overlay, .main-names span').forEach(el => {
       el.style.animation = 'none';
       el.style.opacity = '0';
     });
@@ -1028,7 +1029,7 @@
         card.style.opacity = '0';
         document.getElementById('hint').classList.remove('hidden');
         
-        card.querySelectorAll('.intro-block > *, .time-block, .rsvp-location-block > *, .cloud-overlay, .main-names span').forEach(el => {
+        card.querySelectorAll('.intro-block > *, .time-block-inner, .rsvp-location-block > *, .cloud-overlay, .main-names span').forEach(el => {
           el.style.animation = '';
         });
       }, 1100);
