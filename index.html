@@ -743,15 +743,15 @@
     }
     /* Independent left/right AND up/down control for each of the 3 sub-text lines, on mobile only. */
     .sub-text.intro-line-1 { --intro-line-1-shift: 10px; --intro-line-1-vshift: 0px; } /* "Together with their families" */
-    .sub-text.intro-line-2 { --intro-line-2-shift: 10px; --intro-line-2-vshift: 0px; } /* "invite you to celebrate their wedding" */
-    .sub-text.rsvp-caption { --rsvp-caption-shift: 0px; --rsvp-caption-vshift: 0px; } /* "Répondez s'il vous plaît" */
+    .sub-text.intro-line-2 { --intro-line-2-shift: 10px; --intro-line-2-vshift: 10px; } /* "invite you to celebrate their wedding" */
+    .sub-text.rsvp-caption { --rsvp-caption-shift: 0px; --rsvp-caption-vshift: 5px; } /* "Répondez s'il vous plaît" */
     .main-names {
       font-size: min(4.77vh, 11.34vw); /* 10% smaller than desktop-matching mobile size */
       gap: 0.4vh;
       /* <-- MOVE LEFT/RIGHT ON MOBILE ONLY: negative = left, positive = right, e.g. -10px or 2vw */
       --main-names-shift: 10px;
       /* <-- MOVE UP/DOWN ON MOBILE ONLY: negative = up, positive = down */
-      --main-names-vshift: 0px;
+      --main-names-vshift: 5px;
     }
     .time-block {
       /* <-- MOVE UP/DOWN ON MOBILE ONLY: negative = up, positive = down */
@@ -771,7 +771,7 @@
       /* <-- MOVE LEFT/RIGHT ON MOBILE ONLY: negative = left, positive = right, e.g. -10px or 2vw */
       --closing-note-shift: 0px;
       /* <-- MOVE UP/DOWN ON MOBILE ONLY, on top of the 80px base offset below: negative = up, positive = down */
-      --closing-note-vshift: 10px;
+      --closing-note-vshift: 15px;
       transform: translateY(calc(80px + var(--closing-note-vshift, 0px)));
     }
     .intro-block { gap: 1.1vh; }
