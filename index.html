@@ -322,6 +322,17 @@
     overflow: hidden;
   }
 
+  /* Belt-and-suspenders centering: every direct text/button element gets its
+     own center alignment and full available width, so nothing can hug an
+     edge even inside the absolutely-positioned intro/time/rsvp blocks. */
+  .intro-block, .rsvp-location-block, .time-block {
+    text-align: center;
+  }
+  .intro-block > *, .rsvp-location-block > *:not(.pill-btn) {
+    width: 100%;
+  }
+  .pill-btn { display: block; margin: 0 auto; width: fit-content; }
+
   .card.full .card-inner {
     pointer-events: all;
     opacity: 1;
@@ -339,18 +350,48 @@
   /* Ensure all text is animated elegantly */
   .card.full .intro-block > *:nth-child(1) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
 
-  /* Names Sequence — Updated to use softShine */
-  .card.full .main-names span:nth-child(1) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards, softShine 4s ease-in-out 2.2s infinite; }
-  .card.full .main-names span.amp          { animation: ampReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 1.4s forwards, softShine 4s ease-in-out 2.6s infinite; }
-  .card.full .main-names span:nth-child(3) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards, softShine 4s ease-in-out 3.2s infinite; }
+  /* Names Sequence — reveal, then settle into a slow, soft shine: a subtle
+     glow pulse (softShine) plus a gentle light sweep that glides across the
+     letters (shineSweep), like candlelight catching the ink. Falls back
+     gracefully to just the glow on browsers without background-clip:text. */
+  .main-names span:not(.amp),
+  .main-names span.amp {
+    background: linear-gradient(115deg, var(--ink-light) 30%, #fffdf6 50%, var(--ink-light) 70%);
+    background-size: 260% 100%;
+    background-position: 200% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .card.full .main-names span:nth-child(1) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards, softShine 4.5s ease-in-out 2.2s infinite, shineSweep 6s ease-in-out 2.2s infinite; }
+  .card.full .main-names span.amp          { animation: ampReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 1.4s forwards, softShine 4.5s ease-in-out 2.6s infinite, shineSweep 6s ease-in-out 2.6s infinite; }
+  .card.full .main-names span:nth-child(3) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards, softShine 4.5s ease-in-out 3.2s infinite, shineSweep 6s ease-in-out 3.2s infinite; }
 
-  .card.full .intro-block > *:nth-child(3) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 2.6s forwards; }
-  .card.full .time-block { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.0s forwards; }
-  .card.full .rsvp-location-block > *:nth-child(1) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.4s forwards; }
-  .card.full .rsvp-location-block > *:nth-child(2) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.7s forwards; }
-  .card.full .rsvp-location-block > *:nth-child(3) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.0s forwards; }
-  .card.full .rsvp-location-block > *:nth-child(4) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.3s forwards; }
+  .card.full .intro-block > *:nth-child(3) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 2.6s forwards, gentleFloat 5s ease-in-out 3.6s infinite; }
+  .card.full .time-block { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.0s forwards, gentleFloat 5s ease-in-out 4.0s infinite; }
+  .card.full .rsvp-location-block > *:nth-child(1) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.4s forwards, gentleFloat 5s ease-in-out 4.4s infinite; }
+  .card.full .rsvp-location-block > *:nth-child(2) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.7s forwards, breathePulse 3.6s ease-in-out 4.7s infinite; }
+  .card.full .rsvp-location-block > *:nth-child(3) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.0s forwards, gentleFloat 5s ease-in-out 5.0s infinite; }
+  .card.full .rsvp-location-block > *:nth-child(4) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.3s forwards, breathePulse 3.6s ease-in-out 5.3s infinite; }
   .card.full .close-btn { opacity: 1; pointer-events: all; transition: opacity 0.8s ease 4.8s; }
+
+  /* Slow light sweep across the names */
+  @keyframes shineSweep {
+    0%, 100% { background-position: 200% 0; }
+    50%      { background-position: -60% 0; }
+  }
+
+  /* Barely-there float so text feels alive without being distracting */
+  @keyframes gentleFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-3px); }
+  }
+
+  /* Soft breathing scale for the two pill buttons */
+  @keyframes breathePulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+    50%      { transform: scale(1.035); box-shadow: 0 4px 16px rgba(0,0,0,0.24); }
+  }
 
   @keyframes luxuryReveal {
     0% { opacity: 0; transform: translateY(24px) scale(0.98); filter: blur(6px); }
@@ -626,17 +667,36 @@
       background: url('image1.jpg') center/cover no-repeat;
     }
 
-    .sub-text { font-size: 2.6cqh; } /* <-- ADJUST THIS TO CONTROL MOBILE FONT SIZE */
-    .main-names { font-size: 6.8cqh; }
+    /* Text & button sizing on mobile: previously these used cqh/cqw, which
+       are a % of .card-inner's OWN box. That box is what got resized to
+       "cover" the screen above (so it fills edge-to-edge without letterbox
+       bars) - which means it's now noticeably bigger, in pixels, than the
+       visible viewport on most phones. Since cqh/cqw scale 1:1 with that
+       box, the text/buttons scaled up right along with it and ended up
+       oversized. Switching these specific values to vh/vw ties them to the
+       actual, stable device screen size instead, so they stay the same
+       comfortable size regardless of how much the image itself had to be
+       zoomed to fill that particular phone's screen. Position is untouched
+       (still % of the image, so text stays centered on the composition) -
+       only the size no longer inflates with the zoom. */
+    /* Sizes below use min(vh, vw) instead of plain vh, so on top of being
+       smaller overall, they also can't blow up on short-but-wide phones
+       (landscape, or unusually squat screens) - they're capped by whichever
+       of the two dimensions is tighter, which is what "proportional to the
+       screen" really means. */
+    .sub-text { font-size: min(2.0vh, 4.6vw); } /* <-- ADJUST THIS TO CONTROL MOBILE FONT SIZE */
+    .main-names { font-size: min(5.3vh, 12.6vw); gap: 0.4vh; }
     .amp { font-size: 1.25em; }
-    .date-header { font-size: 2.5cqh; }
-    .date-year { font-size: 5.5cqh; }
-    .date-time { font-size: 2.6cqh; }
-    .venue-location { font-size: 2.3cqh; }
+    .date-header { font-size: min(1.9vh, 4.4vw); }
+    .date-year { font-size: min(4.3vh, 10vw); }
+    .date-time { font-size: min(2.0vh, 4.6vw); }
+    .venue-location { font-size: min(1.8vh, 4.2vw); }
+    .intro-block { gap: 1.1vh; }
+    .rsvp-location-block { gap: 1.3vh; }
 
     .pill-btn {
-      font-size: 2cqh;
-      padding: 1.3cqh 6cqw;
+      font-size: min(1.6vh, 3.7vw);
+      padding: 0.9vh 4vw;
     }
   }
 
