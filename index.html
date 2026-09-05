@@ -596,14 +596,26 @@
        .card-inner keeps the same fixed design aspect-ratio, but is now sized
        with the "cover" formula (max of width/height match) instead of the
        "contain" formula used above for desktop, so it always grows to at
-       least fill the screen. Since it's centered inside .card (which has
-       overflow:hidden), any excess is clipped evenly from the edges - same
-       crop the background-image itself gets from background-size:cover.
-       Because both the image and the text layer scale by the identical
-       factor and share the same center point, every text element keeps its
-       exact relative position/size within the composition on any phone. */
+       least fill the screen width (or height). On phones much wider/shorter
+       than the design, that makes it taller than one screen - instead of
+       hard-clipping that (old behaviour), .card scrolls so nothing is ever
+       permanently unreachable. The background image is moved onto
+       .card-inner itself (rather than staying on .card) so the picture
+       scrolls together with the text instead of staying pinned while the
+       text moves past it - the two never separate. Centering is done with
+       .card-inner's own margin:auto rather than the parent's
+       align-items/justify-content:center, because centering via the parent
+       is what makes flexbox clip the far side of an overflow so it can't be
+       scrolled to; margin:auto centers it the same way but keeps the whole
+       overflow reachable in both directions. */
     .card.full {
-      background-size: cover !important;
+      background-image: none !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
     }
     .card-inner {
       width: max(100%, calc(100dvh * 25.54 / 76.62));
@@ -611,6 +623,7 @@
       height: auto;
       max-height: none;
       flex-shrink: 0;
+      background: url('image1.jpg') center/cover no-repeat;
     }
 
     .sub-text { font-size: 2.6cqh; } /* <-- ADJUST THIS TO CONTROL MOBILE FONT SIZE */
