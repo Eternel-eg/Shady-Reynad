@@ -591,6 +591,28 @@
       margin-bottom: calc((100vw / 565 - 1) * 800px);
     }
 
+    /* Image1 (full-screen invitation card): fill the exact device viewport,
+       whatever its aspect ratio, instead of letterboxing like on desktop.
+       .card-inner keeps the same fixed design aspect-ratio, but is now sized
+       with the "cover" formula (max of width/height match) instead of the
+       "contain" formula used above for desktop, so it always grows to at
+       least fill the screen. Since it's centered inside .card (which has
+       overflow:hidden), any excess is clipped evenly from the edges - same
+       crop the background-image itself gets from background-size:cover.
+       Because both the image and the text layer scale by the identical
+       factor and share the same center point, every text element keeps its
+       exact relative position/size within the composition on any phone. */
+    .card.full {
+      background-size: cover !important;
+    }
+    .card-inner {
+      width: max(100%, calc(100dvh * 25.54 / 76.62));
+      max-width: none;
+      height: auto;
+      max-height: none;
+      flex-shrink: 0;
+    }
+
     .sub-text { font-size: 2.6cqh; } /* <-- ADJUST THIS TO CONTROL MOBILE FONT SIZE */
     .main-names { font-size: 6.8cqh; }
     .amp { font-size: 1.25em; }
