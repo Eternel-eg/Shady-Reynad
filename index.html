@@ -197,6 +197,15 @@
   .rsvp-location-block .sub-text.rsvp-caption {
     color: var(--ink-dark);
     text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+    margin-top: 0.8cqh; /* <-- extra space between Location button and this line */
+  }
+
+  .closing-note {
+    font-family: 'Great Vibes', cursive;
+    color: #a15c62; /* light burgundy */
+    font-size: 1.2cqh;
+    margin-top: 0.3cqh;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.4);
   }
 
   .pill-btn {
@@ -374,6 +383,7 @@
   .card.full .rsvp-location-block > *:nth-child(2) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.7s forwards, breathePulse 3.6s ease-in-out 4.7s infinite; }
   .card.full .rsvp-location-block > *:nth-child(3) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.0s forwards, gentleFloat 5s ease-in-out 5.0s infinite; }
   .card.full .rsvp-location-block > *:nth-child(4) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.3s forwards, breathePulse 3.6s ease-in-out 5.3s infinite; }
+  .card.full .rsvp-location-block > *:nth-child(5) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.6s forwards, gentleFloat 5s ease-in-out 5.6s infinite; }
   .card.full .close-btn { opacity: 1; pointer-events: all; transition: opacity 0.8s ease 4.8s; }
 
   /* Slow light sweep across the names */
@@ -692,6 +702,7 @@
     .date-year { font-size: min(4.3vh, 10vw); }
     .date-time { font-size: min(2.0vh, 4.6vw); }
     .venue-location { font-size: min(1.8vh, 4.2vw); }
+    .closing-note { font-size: min(2.6vh, 6vw); }
     .intro-block { gap: 1.1vh; }
     .rsvp-location-block { gap: 1.3vh; }
 
@@ -791,6 +802,7 @@
         <button class="pill-btn" onclick="openLocation(event)">Location</button>
         <div class="sub-text italic rsvp-caption">Répondez s'il vous plaît</div>
         <button class="pill-btn" onclick="openModal('rsvp', event)">RSVP</button>
+        <div class="closing-note">With all our love,</br>Shady &amp; Reynad</div>
       </div>
 
     </div>
