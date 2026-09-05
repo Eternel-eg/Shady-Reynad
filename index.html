@@ -25,8 +25,8 @@
   /* =====================================================================
      🌟 EASY EDIT: TEXT COLORS, SIZES, AND POSITIONS 🌟
 
-     ALL SIZES USE cqw (container-query width).
-     These units are % of the card's own width — auto-scale on every
+     ALL SIZES USE cqh (container-query height) or cqw (container-query width).
+     These units are % of the card's own height/width — auto-scale on every
      phone, tablet and desktop with zero media queries needed.
 
      Content box is locked to:
@@ -44,7 +44,7 @@
   /* 1. INTRO & OUTRO TEXT (sits on the green panel near the top) */
   .sub-text {
     color: var(--ink-light);
-    font-size: 4.5cqw;
+    font-size: 1.5cqh; /* <-- ADJUST THIS TO CONTROL FONT SIZE */
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
@@ -56,9 +56,9 @@
   /* 2. MAIN NAMES */
   .main-names {
     color: var(--ink-light);
-    font-size: 9.0cqw;
+    font-size: 3.0cqh;
     margin: 0;
-    gap: 1.2cqw;
+    gap: 0.4cqh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -89,7 +89,7 @@
   /* 4. DATE TEXT */
   .date-header {
     color: var(--ink-light);
-    font-size: 6.0cqw;
+    font-size: 2.0cqh;
     margin: 0;
     font-family: 'Marcellus SC', serif;
     text-transform: uppercase;
@@ -101,7 +101,7 @@
   /* 5. YEAR */
   .date-year {
     color: var(--ink-light);
-    font-size: 13.5cqw;
+    font-size: 4.5cqh;
     margin: 0;
     font-family: 'Marcellus SC', serif;
     font-weight: 400;
@@ -112,7 +112,7 @@
   /* 6. TIME */
   .date-time {
     color: var(--ink-dark);
-    font-size: 6.3cqw;
+    font-size: 2.1cqh;
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
@@ -124,7 +124,7 @@
   /* 7. VENUE LOCATION */
   .venue-location {
     color: var(--ink-dark);
-    font-size: 5.7cqw;
+    font-size: 1.9cqh;
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
@@ -157,7 +157,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4.2cqw;
+    gap: 1.4cqh;
     text-align: center;
     opacity: 1;
   }
@@ -170,7 +170,7 @@
     top: 60.1%;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
+    width: 100%; /* <-- Added for perfect centering */
     z-index: 5;
     text-align: center;
     white-space: nowrap;
@@ -187,7 +187,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4.8cqw;
+    gap: 1.6cqh;
     text-align: center;
     opacity: 1;
   }
@@ -200,7 +200,7 @@
 
   .pill-btn {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 4.5cqw;
+    font-size: 1.5cqh;
     letter-spacing: .14em;
     font-weight: 500;
     text-transform: uppercase;
@@ -208,7 +208,7 @@
     background: var(--pill-fill);
     border: none;
     border-radius: 999px;
-    padding: 3cqw 4.2cqw;
+    padding: 1cqh 4.2cqw;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 10px rgba(0,0,0,0.18);
@@ -269,7 +269,7 @@
     transform: translateX(-50%);
     width: 74%;
     height: 44%;
-    background: url('image1.jpg') center/cover no-repeat;
+    background: url('image1.jpg') center top/cover no-repeat;
     border: 1px solid rgba(157,170,134,0.35);
     border-radius: 2px;
     z-index: 1;
@@ -285,14 +285,12 @@
   }
 
   .card.full {
-    background-size: 100% auto !important; 
-    background-position: top center !important;
-    background-attachment: local !important;
+    background-size: contain !important; 
+    background-position: center center !important;
     background-color: #d8ccba !important; 
-    display: block !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .card-inner {
@@ -300,11 +298,13 @@
     pointer-events: none;
     aspect-ratio: 25.54 / 76.62;
     width: 100%;
+    max-width: calc(100dvh * 25.54 / 76.62);
+    max-height: 100dvh;
     margin: auto;
     padding: 0;
     position: relative;
     z-index: 10;
-    container-type: inline-size;
+    container-type: size;
     container-name: card;
   }
 
@@ -325,15 +325,6 @@
   .card.full .card-inner {
     pointer-events: all;
     opacity: 1;
-    max-width: 100%;
-    max-height: none !important;
-    height: auto;
-  }
-
-  .card.full .close-btn {
-    position: fixed;
-    top: 24px;
-    right: 28px;
   }
 
   /* =====================================================================
@@ -345,8 +336,10 @@
 
   .card.full .main-names { opacity: 1; }
 
+  /* Ensure all text is animated elegantly */
   .card.full .intro-block > *:nth-child(1) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
 
+  /* Names Sequence — Updated to use softShine */
   .card.full .main-names span:nth-child(1) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards, softShine 4s ease-in-out 2.2s infinite; }
   .card.full .main-names span.amp          { animation: ampReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 1.4s forwards, softShine 4s ease-in-out 2.6s infinite; }
   .card.full .main-names span:nth-child(3) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards, softShine 4s ease-in-out 3.2s infinite; }
@@ -376,6 +369,7 @@
     100% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0); text-shadow: 1px 1px 5px rgba(0,0,0,0.6); }
   }
 
+  /* Updated soft shine animation */
   @keyframes softShine {
     0%, 100% { 
       text-shadow: 1px 1px 5px rgba(0,0,0,0.5), 0 0 4px rgba(243,234,210,0.2); 
@@ -595,6 +589,19 @@
       transform: scale(calc(100vw / 565));
       transform-origin: top center;
       margin-bottom: calc((100vw / 565 - 1) * 800px);
+    }
+
+    .sub-text { font-size: 2.6cqh; } /* <-- ADJUST THIS TO CONTROL MOBILE FONT SIZE */
+    .main-names { font-size: 6.8cqh; }
+    .amp { font-size: 1.25em; }
+    .date-header { font-size: 2.5cqh; }
+    .date-year { font-size: 5.5cqh; }
+    .date-time { font-size: 2.6cqh; }
+    .venue-location { font-size: 2.3cqh; }
+
+    .pill-btn {
+      font-size: 2cqh;
+      padding: 1.3cqh 6cqw;
     }
   }
 
