@@ -25,8 +25,8 @@
   /* =====================================================================
      🌟 EASY EDIT: TEXT COLORS, SIZES, AND POSITIONS 🌟
 
-     ALL SIZES USE cqh (container-query height) or cqw (container-query width).
-     These units are % of the card's own height/width — auto-scale on every
+     ALL SIZES USE cqw (container-query width).
+     These units are % of the card's own width — auto-scale on every
      phone, tablet and desktop with zero media queries needed.
 
      Content box is locked to:
@@ -44,7 +44,7 @@
   /* 1. INTRO & OUTRO TEXT (sits on the green panel near the top) */
   .sub-text {
     color: var(--ink-light);
-    font-size: 1.5cqh; /* <-- ADJUST THIS TO CONTROL FONT SIZE */
+    font-size: 4.5cqw;
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
@@ -56,9 +56,9 @@
   /* 2. MAIN NAMES */
   .main-names {
     color: var(--ink-light);
-    font-size: 3.0cqh;
+    font-size: 9.0cqw;
     margin: 0;
-    gap: 0.4cqh;
+    gap: 1.2cqw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -89,7 +89,7 @@
   /* 4. DATE TEXT */
   .date-header {
     color: var(--ink-light);
-    font-size: 2.0cqh;
+    font-size: 6.0cqw;
     margin: 0;
     font-family: 'Marcellus SC', serif;
     text-transform: uppercase;
@@ -101,7 +101,7 @@
   /* 5. YEAR */
   .date-year {
     color: var(--ink-light);
-    font-size: 4.5cqh;
+    font-size: 13.5cqw;
     margin: 0;
     font-family: 'Marcellus SC', serif;
     font-weight: 400;
@@ -112,7 +112,7 @@
   /* 6. TIME */
   .date-time {
     color: var(--ink-dark);
-    font-size: 2.1cqh;
+    font-size: 6.3cqw;
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
@@ -124,7 +124,7 @@
   /* 7. VENUE LOCATION */
   .venue-location {
     color: var(--ink-dark);
-    font-size: 1.9cqh;
+    font-size: 5.7cqw;
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
@@ -157,7 +157,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.4cqh;
+    gap: 4.2cqw;
     text-align: center;
     opacity: 1;
   }
@@ -170,7 +170,7 @@
     top: 60.1%;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%; /* <-- Added for perfect centering */
+    width: 100%;
     z-index: 5;
     text-align: center;
     white-space: nowrap;
@@ -187,7 +187,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.6cqh;
+    gap: 4.8cqw;
     text-align: center;
     opacity: 1;
   }
@@ -200,7 +200,7 @@
 
   .pill-btn {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5cqh;
+    font-size: 4.5cqw;
     letter-spacing: .14em;
     font-weight: 500;
     text-transform: uppercase;
@@ -208,7 +208,7 @@
     background: var(--pill-fill);
     border: none;
     border-radius: 999px;
-    padding: 1cqh 4.2cqw;
+    padding: 3cqw 4.2cqw;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 10px rgba(0,0,0,0.18);
@@ -285,25 +285,14 @@
   }
 
   .card.full {
-    background: none !important; /* the real <img class="card-bg"> now shows the artwork, full width, no letterbox */
-    display: block;
-    overflow-y: auto;
+    background-size: 100% auto !important; 
+    background-position: top center !important;
+    background-attachment: local !important;
+    background-color: #d8ccba !important; 
+    display: block !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch;
-  }
-
-  /* The actual image1 artwork — a real <img> so it scrolls together with the
-     text overlaid on it, instead of a CSS background (which can't scroll
-     past the viewport height the way a background needs to here). */
-  .card-bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* card-inner's aspect-ratio matches image1 exactly, so this never crops */
-    z-index: 0;
-    pointer-events: none;
-    user-select: none;
-    display: block;
   }
 
   .card-inner {
@@ -311,28 +300,12 @@
     pointer-events: none;
     aspect-ratio: 25.54 / 76.62;
     width: 100%;
-    max-width: calc(100dvh * 25.54 / 76.62);
-    max-height: 100dvh;
     margin: auto;
     padding: 0;
     position: relative;
     z-index: 10;
-    container-type: size;
+    container-type: inline-size;
     container-name: card;
-  }
-
-  /* Full screen, edge-to-edge on every device: the card fills the full
-     viewport WIDTH and grows as tall as the image needs (aspect-ratio is
-     locked), so on a device narrower than the design it becomes a tall
-     page the guest scrolls through, instead of being shrunk to fit one
-     screen. This is what keeps text proportional to the artwork on every
-     device without a separate mobile font-size override. */
-  .card.full .card-inner {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    max-height: none;
-    margin: 0;
   }
 
   .card-content {
@@ -352,6 +325,15 @@
   .card.full .card-inner {
     pointer-events: all;
     opacity: 1;
+    max-width: 100%;
+    max-height: none !important;
+    height: auto;
+  }
+
+  .card.full .close-btn {
+    position: fixed;
+    top: 24px;
+    right: 28px;
   }
 
   /* =====================================================================
@@ -363,10 +345,8 @@
 
   .card.full .main-names { opacity: 1; }
 
-  /* Ensure all text is animated elegantly */
   .card.full .intro-block > *:nth-child(1) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
 
-  /* Names Sequence — Updated to use softShine */
   .card.full .main-names span:nth-child(1) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards, softShine 4s ease-in-out 2.2s infinite; }
   .card.full .main-names span.amp          { animation: ampReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 1.4s forwards, softShine 4s ease-in-out 2.6s infinite; }
   .card.full .main-names span:nth-child(3) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards, softShine 4s ease-in-out 3.2s infinite; }
@@ -396,7 +376,6 @@
     100% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0); text-shadow: 1px 1px 5px rgba(0,0,0,0.6); }
   }
 
-  /* Updated soft shine animation */
   @keyframes softShine {
     0%, 100% { 
       text-shadow: 1px 1px 5px rgba(0,0,0,0.5), 0 0 4px rgba(243,234,210,0.2); 
@@ -449,10 +428,6 @@
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
   }
   .close-btn:hover { background: rgba(157,170,134,0.2); color: #fff; }
-
-  /* Keep the close button pinned in the corner while the tall, full-screen
-     card scrolls underneath it, instead of scrolling away with the content. */
-  .card.full .close-btn { position: fixed; }
 
   .card-shimmer {
     position: absolute;
@@ -621,11 +596,6 @@
       transform-origin: top center;
       margin-bottom: calc((100vw / 565 - 1) * 800px);
     }
-    /* Font sizes are intentionally NOT overridden here anymore — now that
-       the opened card is full width and scrollable on every device, cqh/cqw
-       already scale text proportionally to the artwork at any screen size.
-       Adjust the base cqh values above (in the EASY EDIT section) if you
-       want text bigger/smaller everywhere at once. */
   }
 
   .loading-logo { width: clamp(130px, 28vw, 200px); height: clamp(130px, 28vw, 200px); object-fit: contain; opacity: 0.92; margin-bottom: 4px; }
@@ -696,8 +666,6 @@
     <div class="close-btn" id="closeBtn">✕ &nbsp; Close</div>
 
     <div class="card-inner">
-
-      <img class="card-bg" src="image1.jpg" alt="" aria-hidden="true">
 
       <img class="cloud-overlay" src="image6.gif" alt="" aria-hidden="true">
 
