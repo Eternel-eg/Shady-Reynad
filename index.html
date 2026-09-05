@@ -285,12 +285,25 @@
   }
 
   .card.full {
-    background-size: contain !important; 
-    background-position: center center !important;
-    background-color: #d8ccba !important; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: none !important; /* the real <img class="card-bg"> now shows the artwork, full width, no letterbox */
+    display: block;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* The actual image1 artwork — a real <img> so it scrolls together with the
+     text overlaid on it, instead of a CSS background (which can't scroll
+     past the viewport height the way a background needs to here). */
+  .card-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* card-inner's aspect-ratio matches image1 exactly, so this never crops */
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    display: block;
   }
 
   .card-inner {
@@ -306,6 +319,20 @@
     z-index: 10;
     container-type: size;
     container-name: card;
+  }
+
+  /* Full screen, edge-to-edge on every device: the card fills the full
+     viewport WIDTH and grows as tall as the image needs (aspect-ratio is
+     locked), so on a device narrower than the design it becomes a tall
+     page the guest scrolls through, instead of being shrunk to fit one
+     screen. This is what keeps text proportional to the artwork on every
+     device without a separate mobile font-size override. */
+  .card.full .card-inner {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 0;
   }
 
   .card-content {
@@ -422,6 +449,10 @@
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
   }
   .close-btn:hover { background: rgba(157,170,134,0.2); color: #fff; }
+
+  /* Keep the close button pinned in the corner while the tall, full-screen
+     card scrolls underneath it, instead of scrolling away with the content. */
+  .card.full .close-btn { position: fixed; }
 
   .card-shimmer {
     position: absolute;
@@ -590,19 +621,11 @@
       transform-origin: top center;
       margin-bottom: calc((100vw / 565 - 1) * 800px);
     }
-
-    .sub-text { font-size: 2.6cqh; } /* <-- ADJUST THIS TO CONTROL MOBILE FONT SIZE */
-    .main-names { font-size: 6.8cqh; }
-    .amp { font-size: 1.25em; }
-    .date-header { font-size: 2.5cqh; }
-    .date-year { font-size: 5.5cqh; }
-    .date-time { font-size: 2.6cqh; }
-    .venue-location { font-size: 2.3cqh; }
-
-    .pill-btn {
-      font-size: 2cqh;
-      padding: 1.3cqh 6cqw;
-    }
+    /* Font sizes are intentionally NOT overridden here anymore — now that
+       the opened card is full width and scrollable on every device, cqh/cqw
+       already scale text proportionally to the artwork at any screen size.
+       Adjust the base cqh values above (in the EASY EDIT section) if you
+       want text bigger/smaller everywhere at once. */
   }
 
   .loading-logo { width: clamp(130px, 28vw, 200px); height: clamp(130px, 28vw, 200px); object-fit: contain; opacity: 0.92; margin-bottom: 4px; }
@@ -673,6 +696,8 @@
     <div class="close-btn" id="closeBtn">✕ &nbsp; Close</div>
 
     <div class="card-inner">
+
+      <img class="card-bg" src="image1.jpg" alt="" aria-hidden="true">
 
       <img class="cloud-overlay" src="image6.gif" alt="" aria-hidden="true">
 
