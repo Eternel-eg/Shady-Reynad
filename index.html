@@ -34,6 +34,23 @@
        Top & Bottom : 20.6% each  →  content height = 58.8% of card
      ===================================================================== */
 
+  /* =====================================================================
+     🔼🔽 MOVE TEXT UP/DOWN — quick reference
+     Each variable below defaults to 0px (no move). Negative = up,
+     positive = down. Set them as CSS custom properties either inline
+     on the element in the HTML, or by adding a line like
+     ".main-names { --main-names-vshift: -8px; }" anywhere in <style>
+     AFTER this block (desktop) or inside the mobile media query
+     further down (mobile only).
+
+       --intro-line-1-vshift          "Together with their families"
+       --intro-line-2-vshift          "invite you to celebrate their wedding"
+       --main-names-vshift            The couple's names
+       --time-block-vshift            "at 5:00 PM" (whole block)
+       --rsvp-location-block-vshift   Venue, buttons & RSVP caption (whole block)
+       --closing-note-vshift          "With all our love, Shady & Reynad"
+     ===================================================================== */
+
   :root {
     --ink-light: #f3ead2;   
     --ink-dark:  #6b5738;   
@@ -53,14 +70,17 @@
     text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
     /* <-- MOVE LEFT/RIGHT (fallback, applies if no specific line override below): negative = left, positive = right */
     --shift: var(--sub-text-shift, 0px);
+    /* <-- MOVE UP/DOWN (fallback): negative = up, positive = down */
+    --vshift: var(--sub-text-vshift, 0px);
     transform: translateX(var(--shift));
+    margin-top: var(--vshift);
   }
 
-  /* Independent left/right control for each of the 3 sub-text lines.
-     Edit the values below (e.g. -10px or 2vw). Negative = left, positive = right. */
-  .sub-text.intro-line-1 { --shift: var(--intro-line-1-shift, 10px); } /* "Together with their families" */
-  .sub-text.intro-line-2 { --shift: var(--intro-line-2-shift, 10px); } /* "invite you to celebrate their wedding" */
-  .sub-text.rsvp-caption { --shift: var(--rsvp-caption-shift, 0px); } /* "Répondez s'il vous plaît" */
+  /* Independent left/right AND up/down control for each of the 3 sub-text lines.
+     Edit the values below (e.g. -10px or 2vw). Negative = left/up, positive = right/down. */
+  .sub-text.intro-line-1 { --shift: var(--intro-line-1-shift, 10px); --vshift: var(--intro-line-1-vshift, 0px); } /* "Together with their families" */
+  .sub-text.intro-line-2 { --shift: var(--intro-line-2-shift, 10px); --vshift: var(--intro-line-2-vshift, 0px); } /* "invite you to celebrate their wedding" */
+  .sub-text.rsvp-caption { --shift: var(--rsvp-caption-shift, 0px); --vshift: var(--rsvp-caption-vshift, 0px); } /* "Répondez s'il vous plaît" */
 
   /* 2. MAIN NAMES */
   .main-names {
@@ -77,7 +97,8 @@
     line-height: 1;
     text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
     /* <-- MOVE LEFT/RIGHT: negative = left, positive = right, e.g. -10px or 2vw */
-    transform: translateX(var(--main-names-shift, 10px));
+    /* <-- MOVE UP/DOWN: negative = up, positive = down, e.g. -10px or 1vh */
+    transform: translate(var(--main-names-shift, 10px), var(--main-names-vshift, 0px));
   }
 
   .main-names span:not(.amp) {
@@ -179,7 +200,8 @@
   /* Time */
   .time-block {
     position: absolute;
-    top: 60.1%;
+    /* <-- MOVE UP/DOWN: negative = up, positive = down, e.g. -10px or -1vh */
+    top: calc(60.1% + var(--time-block-vshift, 0px));
     left: 50%;
     transform: translateX(-50%);
     width: 100%; /* <-- Added for perfect centering */
@@ -192,7 +214,8 @@
   /* RSVP & Location */
   .rsvp-location-block {
     position: absolute;
-    top: 66.5%;
+    /* <-- MOVE UP/DOWN (moves venue, buttons & RSVP caption together): negative = up, positive = down, e.g. -10px or -1vh */
+    top: calc(66.5% + var(--rsvp-location-block-vshift, 0px));
     left: 50%;
     transform: translateX(-50%);
     width: 78%;
@@ -216,7 +239,8 @@
     font-family: 'Great Vibes', cursive;
     color: #a15c62; /* light burgundy */
     font-size: 1.2cqh;
-    margin-top: 0.3cqh;
+    /* <-- MOVE UP/DOWN: negative = up, positive = down, e.g. -10px or 1vh */
+    margin-top: calc(0.3cqh + var(--closing-note-vshift, 0px));
     text-shadow: 1px 1px 2px rgba(255,255,255,0.4);
     /* <-- MOVE LEFT/RIGHT: negative = left, positive = right, e.g. -10px or 2vw */
     --shift: var(--closing-note-shift, 0px);
@@ -714,16 +738,28 @@
       font-size: min(2.0vh, 4.6vw); /* <-- ADJUST THIS TO CONTROL MOBILE FONT SIZE */
       /* <-- MOVE LEFT/RIGHT ON MOBILE ONLY (fallback): negative = left, positive = right, e.g. -10px or 2vw */
       --sub-text-shift: 0px;
+      /* <-- MOVE UP/DOWN ON MOBILE ONLY (fallback): negative = up, positive = down */
+      --sub-text-vshift: 0px;
     }
-    /* Independent left/right control for each of the 3 sub-text lines, on mobile only. */
-    .sub-text.intro-line-1 { --intro-line-1-shift: 10px; } /* "Together with their families" */
-    .sub-text.intro-line-2 { --intro-line-2-shift: 10px; } /* "invite you to celebrate their wedding" */
-    .sub-text.rsvp-caption { --rsvp-caption-shift: 0px; } /* "Répondez s'il vous plaît" */
+    /* Independent left/right AND up/down control for each of the 3 sub-text lines, on mobile only. */
+    .sub-text.intro-line-1 { --intro-line-1-shift: 10px; --intro-line-1-vshift: 0px; } /* "Together with their families" */
+    .sub-text.intro-line-2 { --intro-line-2-shift: 10px; --intro-line-2-vshift: 0px; } /* "invite you to celebrate their wedding" */
+    .sub-text.rsvp-caption { --rsvp-caption-shift: 0px; --rsvp-caption-vshift: 0px; } /* "Répondez s'il vous plaît" */
     .main-names {
       font-size: min(4.77vh, 11.34vw); /* 10% smaller than desktop-matching mobile size */
       gap: 0.4vh;
       /* <-- MOVE LEFT/RIGHT ON MOBILE ONLY: negative = left, positive = right, e.g. -10px or 2vw */
       --main-names-shift: 10px;
+      /* <-- MOVE UP/DOWN ON MOBILE ONLY: negative = up, positive = down */
+      --main-names-vshift: 0px;
+    }
+    .time-block {
+      /* <-- MOVE UP/DOWN ON MOBILE ONLY: negative = up, positive = down */
+      --time-block-vshift: 0px;
+    }
+    .rsvp-location-block {
+      /* <-- MOVE UP/DOWN ON MOBILE ONLY (moves venue, buttons & RSVP caption together): negative = up, positive = down */
+      --rsvp-location-block-vshift: 0px;
     }
     .amp { font-size: 1.25em; }
     .date-header { font-size: min(1.9vh, 4.4vw); }
@@ -734,7 +770,9 @@
       font-size: min(1.34vh, 4.4vw); /* 10% smaller than desktop-matching mobile size */
       /* <-- MOVE LEFT/RIGHT ON MOBILE ONLY: negative = left, positive = right, e.g. -10px or 2vw */
       --closing-note-shift: 0px;
-      transform: translateY(80px);
+      /* <-- MOVE UP/DOWN ON MOBILE ONLY, on top of the 80px base offset below: negative = up, positive = down */
+      --closing-note-vshift: 10px;
+      transform: translateY(calc(80px + var(--closing-note-vshift, 0px)));
     }
     .intro-block { gap: 1.1vh; }
     .rsvp-location-block { gap: 1.3vh; }
