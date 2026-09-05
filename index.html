@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Aya & Mahmoud — Wedding Invitation</title>
+<title>Shady & Reynad — Wedding Invitation</title>
 <!--
   ╔══════════════════════════════════════════════════════════════╗
   ║  🔤 FONT GUIDE — swap any family name to change the look    ║
@@ -34,10 +34,17 @@
        Top & Bottom : 20.6% each  →  content height = 58.8% of card
      ===================================================================== */
 
-  /* 1. INTRO & OUTRO TEXT */
+  :root {
+    --ink-light: #f3ead2;   
+    --ink-dark:  #6b5738;   
+    --pill-fill: #8D836E;   
+    --pill-text: #f4ecd8;   
+  }
+
+  /* 1. INTRO & OUTRO TEXT (sits on the green panel near the top) */
   .sub-text {
-    color: #9daa86;
-    font-size: 1.9cqh;
+    color: var(--ink-light);
+    font-size: 1.5cqh; /* <-- ADJUST THIS TO CONTROL FONT SIZE */
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
@@ -48,8 +55,8 @@
 
   /* 2. MAIN NAMES */
   .main-names {
-    color: #9daa86;
-    font-size: 5.0cqh;
+    color: var(--ink-light);
+    font-size: 3.0cqh;
     margin: 0;
     gap: 0.4cqh;
     display: flex;
@@ -69,7 +76,7 @@
 
   /* 3. THE AMPERSAND (&) */
   .amp {
-    color: #9daa86;
+    color: var(--ink-light);
     font-size: 1.4em;
     font-family: 'Great Vibes', cursive;
     text-transform: none;
@@ -81,7 +88,7 @@
 
   /* 4. DATE TEXT */
   .date-header {
-    color: #9daa86;
+    color: var(--ink-light);
     font-size: 2.0cqh;
     margin: 0;
     font-family: 'Marcellus SC', serif;
@@ -93,7 +100,7 @@
 
   /* 5. YEAR */
   .date-year {
-    color: #9daa86;
+    color: var(--ink-light);
     font-size: 4.5cqh;
     margin: 0;
     font-family: 'Marcellus SC', serif;
@@ -104,25 +111,114 @@
 
   /* 6. TIME */
   .date-time {
-    color: #9daa86;
-    font-size: 1.9cqh;
+    color: var(--ink-dark);
+    font-size: 2.1cqh;
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-weight: 400;
     letter-spacing: 0.05em;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
   }
 
   /* 7. VENUE LOCATION */
   .venue-location {
-    color: #9daa86;
-    font-size: 1.75cqh;
+    color: var(--ink-dark);
+    font-size: 1.9cqh;
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
     letter-spacing: 0.08em;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+  }
+
+  /* =====================================================================
+     NEW CONTENT BLOCKS 
+     ===================================================================== */
+
+  .cloud-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .intro-block {
+    position: absolute;
+    top: 10.92%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.4cqh;
+    text-align: center;
+    opacity: 1;
+  }
+  .intro-block > * { opacity: 0; }
+  .main-names span { opacity: 0; }
+
+  /* Time */
+  .time-block {
+    position: absolute;
+    top: 60.1%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%; /* <-- Added for perfect centering */
+    z-index: 5;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* RSVP & Location */
+  .rsvp-location-block {
+    position: absolute;
+    top: 69.4%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 78%;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6cqh;
+    text-align: center;
+    opacity: 1;
+  }
+  .rsvp-location-block > * { opacity: 0; }
+
+  .rsvp-location-block .sub-text.rsvp-caption {
+    color: var(--ink-dark);
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+  }
+
+  .pill-btn {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5cqh;
+    letter-spacing: .14em;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--pill-text);
+    background: var(--pill-fill);
+    border: none;
+    border-radius: 999px;
+    padding: 1cqh 4.2cqw;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.35);
+  }
+  .pill-btn:hover, .pill-btn:active {
+    background: #756a56;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.28);
+    transform: translateY(-2px);
+    color: #fff;
   }
 
   /* =====================================================================
@@ -166,7 +262,6 @@
   }
   .scene.opened .env-flap { transform: rotateX(178deg); }
 
-  /* ═══ CARD: INITIAL STATE (Inside Envelope) ═══ */
   .card {
     position: absolute;
     left: 50%;
@@ -201,34 +296,18 @@
   .card-inner {
     opacity: 0;
     pointer-events: none;
-    /* Lock the aspect ratio to exactly match the background image */
-    aspect-ratio: 565 / 800;
+    aspect-ratio: 25.54 / 76.62;
     width: 100%;
-    max-width: calc(100dvh * (565 / 800));
+    max-width: calc(100dvh * 25.54 / 76.62);
     max-height: 100dvh;
     margin: auto;
     padding: 0;
     position: relative;
     z-index: 10;
-    /* ← Makes this the container for cqh/cqw units inside .card-content */
     container-type: size;
     container-name: card;
   }
 
-  /*
-   * Reference measurements from the background image (565 × 800 px native):
-   * • Wax stamp bottom edge  ≈  y 168px  →  168/800 = 21%
-   * • Bottom decorative trim ≈  y 720px  →  (800-720)/800 = 10%
-   * • Left/right safe inset  ≈  x 46px   →  46/565 = 8%
-   * Using position:absolute means top/left/right/bottom are % of the
-   * container's HEIGHT and WIDTH respectively — exactly what we need.
-   */
-  /*
-   * ╔══════════════════════════════════════════════════════════╗
-   * ║  CONTENT BOX — left/right: 20.3% · top/bottom: 20.6%   ║
-   * ║  content width = 59.4%  ·  content height = 58.8%      ║
-   * ╚══════════════════════════════════════════════════════════╝
-   */
   .card-content {
     position: absolute;
     top:    20.6%;
@@ -252,53 +331,27 @@
      ✨ HIGH-END ELEGANT ANIMATION SEQUENCE ✨
      ===================================================================== */
   
-  /* Reset opacity for children before keyframes take over */
-  .card-content > * { opacity: 0; }
-  .main-names span { opacity: 0; }
+  .cloud-overlay { opacity: 0; animation: luxuryReveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+  .card.full .cloud-overlay { animation: luxuryReveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
 
-  /* Ensure the names container itself is visible so we can animate spans inside */
-  .card.full .card-content > *:nth-child(2) { opacity: 1; }
+  .card.full .main-names { opacity: 1; }
 
-  /* 1. Sub-text */
-  .card.full .card-content > *:nth-child(1) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
+  /* Ensure all text is animated elegantly */
+  .card.full .intro-block > *:nth-child(1) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
 
-  /* 2. Names Sequence */
-  .card.full .main-names span:nth-child(1) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards, textGlow 4s ease-in-out 2.2s infinite; }
-  .card.full .main-names span.amp          { animation: ampReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 1.4s forwards, textGlow 4s ease-in-out 2.6s infinite; }
-  .card.full .main-names span:nth-child(3) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards, textGlow 4s ease-in-out 3.2s infinite; }
+  /* Names Sequence — Updated to use softShine */
+  .card.full .main-names span:nth-child(1) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards, softShine 4s ease-in-out 2.2s infinite; }
+  .card.full .main-names span.amp          { animation: ampReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 1.4s forwards, softShine 4s ease-in-out 2.6s infinite; }
+  .card.full .main-names span:nth-child(3) { animation: nameReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards, softShine 4s ease-in-out 3.2s infinite; }
 
-  /* 3. Sub-text */
-  .card.full .card-content > *:nth-child(3) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 2.6s forwards; }
-  
-  /* 4. Rule (Line) */
-  .card.full .card-content > *:nth-child(4) { animation: lineExpand 1.2s cubic-bezier(0.16, 1, 0.3, 1) 2.8s forwards; }
-  
-  /* 5. Date Header */
-  .card.full .card-content > *:nth-child(5) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.0s forwards; }
-  
-  /* 6. Date Year */
-  .card.full .card-content > *:nth-child(6) { animation: yearReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 3.2s forwards; }
-  
-  /* 7. Date Time */
-  .card.full .card-content > *:nth-child(7) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.4s forwards; }
-
-  /* 8. Venue Location */
-  .card.full .card-content > *:nth-child(8) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.6s forwards; }
-  
-  /* 9. Rule (Line) */
-  .card.full .card-content > *:nth-child(9) { animation: lineExpand 1.2s cubic-bezier(0.16, 1, 0.3, 1) 3.8s forwards; }
-  
-  /* 10. Dress Code */
-  .card.full .card-content > *:nth-child(10) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.0s forwards; }
-  
-  /* 11. Buttons */
-  .card.full .card-content > *:nth-child(11){ animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.2s forwards; }
-
-  /* 12. Close Button */
+  .card.full .intro-block > *:nth-child(3) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 2.6s forwards; }
+  .card.full .time-block { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.0s forwards; }
+  .card.full .rsvp-location-block > *:nth-child(1) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.4s forwards; }
+  .card.full .rsvp-location-block > *:nth-child(2) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 3.7s forwards; }
+  .card.full .rsvp-location-block > *:nth-child(3) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.0s forwards; }
+  .card.full .rsvp-location-block > *:nth-child(4) { animation: luxuryReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 4.3s forwards; }
   .card.full .close-btn { opacity: 1; pointer-events: all; transition: opacity 0.8s ease 4.8s; }
 
-
-  /* ── Keyframes for Cinematic Motion ── */
   @keyframes luxuryReveal {
     0% { opacity: 0; transform: translateY(24px) scale(0.98); filter: blur(6px); }
     100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
@@ -316,9 +369,18 @@
     100% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0); text-shadow: 1px 1px 5px rgba(0,0,0,0.6); }
   }
 
-  @keyframes textGlow {
-    0%, 100% { text-shadow: 1px 1px 5px rgba(0,0,0,0.6), 0 0 2px rgba(157,170,134,0.0); color: #9daa86; }
-    50% { text-shadow: 1px 1px 5px rgba(0,0,0,0.6), 0 0 15px rgba(157,170,134,0.85), 0 0 28px rgba(157,170,134,0.5); color: #e8f0d8; }
+  /* Updated soft shine animation */
+  @keyframes softShine {
+    0%, 100% { 
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.5), 0 0 4px rgba(243,234,210,0.2); 
+      color: #f3ead2; 
+      opacity: 0.9;
+    }
+    50% { 
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.5), 0 0 12px rgba(255,250,240,0.7); 
+      color: #ffffff; 
+      opacity: 1;
+    }
   }
 
   @keyframes yearReveal {
@@ -326,13 +388,6 @@
     100% { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 0.15em; filter: blur(0); }
   }
 
-  @keyframes lineExpand {
-    0% { transform: scaleX(0); opacity: 0; filter: blur(4px); }
-    100% { transform: scaleX(1); opacity: 1; filter: blur(0); }
-  }
-
-
-  /* Decorative Rule */
   .rule { 
     width: 25%; 
     max-width: 140px; 
@@ -345,51 +400,6 @@
   
   .sub-text.italic { font-style: italic; }
 
-  /* ─── CTA Buttons — fully responsive via cqh/cqw ─── */
-  .btn-row {
-    display: flex;
-    gap: 2cqw;
-    margin-top: 0;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 20;
-    width: 100%;
-  }
-  .btn {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3cqh;
-    letter-spacing: .12em;
-    font-weight: 500;
-    text-transform: uppercase;
-    color: #d4dcc8;
-    border: 1px solid rgba(157,170,134,0.6);
-    background: rgba(40,30,15,0.7);
-    padding: 1cqh 2.7cqw;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 1cqw;
-    backdrop-filter: blur(6px);
-    flex: 1 1 0;
-    max-width: 19.4cqw;
-    justify-content: center;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-    white-space: nowrap;
-  }
-  .btn:hover:not(:disabled), .btn:active:not(:disabled) { 
-    background: rgba(157,170,134,0.3); 
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3); 
-    color: #ffffff; 
-    transform: translateY(-2px);
-  }
-  .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-  .btn svg { width: 1.6cqh; height: 1.6cqh; flex-shrink: 0; }
-
-  /* close btn - Adjusted positioning */
   .close-btn {
     position: absolute;
     top: 24px; right: 28px;
@@ -413,7 +423,6 @@
   }
   .close-btn:hover { background: rgba(157,170,134,0.2); color: #fff; }
 
-  /* Shimmer */
   .card-shimmer {
     position: absolute;
     inset: 0;
@@ -474,7 +483,6 @@
     to   { opacity:0;   transform: translateY(110vh) rotate(400deg); }
   }
 
-  /* ═══ MODALS ═══ */
   .modal-overlay {
     position: fixed; inset: 0; background: rgba(40,28,16,0.65);
     backdrop-filter: blur(8px); z-index: 200; display: flex;
@@ -542,7 +550,39 @@
   .rsvp-thanks .ty-text { font-family:'Parisienne',serif; font-size: clamp(1.6rem,6vw,2.2rem); color:#9daa86; text-transform:uppercase; letter-spacing:0.05em; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
   .rsvp-thanks .ty-sub  { font-family:'Cormorant Garamond',serif; font-size: clamp(0.9rem,2vw,1rem); letter-spacing:.15em; color:#7a8f68; text-transform:uppercase; }
 
-  /* ── Mobile adjustments ── */
+  .modal-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(0.85rem, 2.3vw, 1rem);
+    line-height: 1.5;
+    color: #7a8f68;
+    margin-bottom: 18px;
+  }
+
+  .attention-box {
+    border: 1px solid rgba(157,170,134,0.35);
+    background: rgba(157,170,134,0.08);
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    text-align: left;
+  }
+  .attention-box .attn-title {
+    font-family: 'Marcellus SC', serif;
+    font-size: 0.78rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #7a8f68;
+    margin-bottom: 4px;
+  }
+  .attention-box .attn-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(0.9rem, 2.4vw, 1rem);
+    color: #6a5030;
+    line-height: 1.5;
+  }
+
   @media (max-width: 600px) {
     body { justify-content: flex-start; padding-top: 8px; overflow-x: hidden; }
     .scene {
@@ -551,37 +591,22 @@
       margin-bottom: calc((100vw / 565 - 1) * 800px);
     }
 
-    /* ✨ NEW: Boost text sizes specifically for narrow mobile screens ✨ */
-    .sub-text { font-size: 2.5cqh; }
-    .main-names { font-size: 6.5cqh; }
+    .sub-text { font-size: 2.6cqh; } /* <-- ADJUST THIS TO CONTROL MOBILE FONT SIZE */
+    .main-names { font-size: 6.8cqh; }
     .amp { font-size: 1.25em; }
     .date-header { font-size: 2.5cqh; }
     .date-year { font-size: 5.5cqh; }
-    .date-time { font-size: 2.4cqh; }
-    .venue-location { font-size: 2.2cqh; }
-    
-    .btn-row { gap: 3cqw; }
-    .btn {
-      font-size: 1.8cqh;
-      padding: 1.2cqh 3cqw;
-      max-width: 38cqw; /* Allow buttons slightly more width */
+    .date-time { font-size: 2.6cqh; }
+    .venue-location { font-size: 2.3cqh; }
+
+    .pill-btn {
+      font-size: 2cqh;
+      padding: 1.3cqh 6cqw;
     }
-    .btn svg { width: 2cqh; height: 2cqh; }
   }
 
-  /*
-   * HOW TO RESIZE THE LOGO:
-   * ─────────────────────────────────────────────────
-   * clamp(MIN, PREFERRED, MAX)
-   * • MIN   = smallest size on tiny screens
-   * • PREFERRED = scales with viewport width (vw)
-   * • MAX   = largest it will ever grow
-   * Current: 130px → 200px  (was 80px → 140px)
-   * ─────────────────────────────────────────────────
-   */
   .loading-logo { width: clamp(130px, 28vw, 200px); height: clamp(130px, 28vw, 200px); object-fit: contain; opacity: 0.92; margin-bottom: 4px; }
 
-  /* ═══ LOADING SCREEN ═══ */
   #loadingScreen {
     position: fixed; inset: 0; background: radial-gradient(ellipse at 50% 40%, #ede5d8 0%, #d8ccba 60%, #c9bc9f 100%);
     z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; transition: opacity 0.8s ease;
@@ -597,7 +622,6 @@
   .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
   @keyframes dotPulse { 0%, 100% { transform: scale(1); opacity: 0.4; } 50% { transform: scale(1.4); opacity: 1; background: #9daa86; } }
 
-  /* ═══ MUSIC PLAYER ═══ */
   #musicPlayer {
     position: fixed; bottom: 28px; right: 28px; z-index: 9999; display: flex; align-items: center; gap: 0;
     height: 48px; border-radius: 100px; overflow: hidden; transition: width 0.5s cubic-bezier(0.34, 1.1, 0.64, 1);
@@ -643,77 +667,58 @@
 
 <div class="scene" id="scene" onclick="startOpen()">
 
-  <!-- CARD behind envelope -->
   <div class="card" id="card">
     <div class="card-shimmer"></div>
     
     <div class="close-btn" id="closeBtn">✕ &nbsp; Close</div>
 
-    <!-- The inner wrapper locks aspect-ratio to the image.
-         card-content uses position:absolute so top/bottom % = % of the image HEIGHT,
-         not width — this is how we pin text precisely to the design. -->
     <div class="card-inner">
-      <div class="card-content">
-      
+
+      <img class="cloud-overlay" src="image6.gif" alt="" aria-hidden="true">
+
+      <div class="intro-block">
         <div class="sub-text italic">Together with their families</div>
-        
+
         <div class="main-names">
-          <span>Aya</span>
+          <span>Shady</span>
           <span class="amp">&</span>
-          <span>MAHMOUD</span>
-        </div>
-        
-        <div class="sub-text italic">invite you to celebrate their wedding</div>
-        
-        <div class="rule"></div>
-        
-        <div class="date-header">26&zwnj; - 09&zwnj; - 2026</div>
-        
-    
-        
-        <div class="date-time italic">at 7:00 PM</div>
-        
-        <div class="venue-location">Le Méridien Cairo Airport <br> Lotus Ballroom</div>
-        
-        <div class="rule"></div>
-        
-        <div class="btn-row">
-          <button class="btn" onclick="openModal('rsvp', event)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            RSVP
-          </button>
-          <button class="btn" onclick="openLocation(event)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            Location
-          </button>
+          <span>Reynad</span>
         </div>
 
-      </div><!-- /.card-content -->
-    </div><!-- /.card-inner -->
+        <div class="sub-text italic">invite you to celebrate</br>their wedding</div>
+      </div>
+
+      <div class="time-block date-time italic">at 5:00 PM</div>
+
+      <div class="rsvp-location-block">
+        <div class="venue-location">Le Passage Cairo Hotel <br> </div>
+        <button class="pill-btn" onclick="openLocation(event)">Location</button>
+        <div class="sub-text italic rsvp-caption">Répondez s'il vous plaît</div>
+        <button class="pill-btn" onclick="openModal('rsvp', event)">RSVP</button>
+      </div>
+
+    </div>
   </div>
 
-  <!-- ENVELOPE BODY -->
   <div class="env-body">
     <img src="image2.png" alt="Envelope">
   </div>
 
-  <!-- ENVELOPE FLAP -->
   <div class="env-flap" id="flap">
     <img src="image3.png" alt="Envelope Flap">
   </div>
 
 </div>
 
-<!-- Larger Click Hint -->
 <div class="hint" id="hint">✦ Click to open your invitation ✦</div>
 
-<!-- ── RSVP MODAL ── -->
 <div class="modal-overlay" id="modal-rsvp">
   <div class="modal-box">
     <span class="modal-close" onclick="closeModal('rsvp')">✕ Close</span>
     <div class="modal-title">RSVP</div>
     <div class="modal-sub">Your Presence Matters ♥️</div>
     <div class="modal-rule"></div>
+    <div class="modal-note">We love your kids, but thought you could use the night off! Adults-only, please.</div>
     <div class="rsvp-form" id="rsvpForm">
       <input type="text" placeholder="Your Full Name" id="rsvpName" required>
       <select id="rsvpAttend" required>
@@ -721,7 +726,6 @@
         <option value="yes">Joyfully accepts</option>
         <option value="no">Regretfully declines</option>
       </select>
-      <!-- Added required attribute to the guests input field -->
       <input type="number" placeholder="Number of guests -Including yourself-" min="1" max="6" id="rsvpGuests" required>
       <input type="text" placeholder="Leave a message for the couple 💌" id="rsvpDiet">
       <button class="rsvp-submit" id="submitBtn" onclick="submitRSVP()">Confirm Attendance</button>
@@ -734,7 +738,6 @@
   </div>
 </div>
 
-<!-- ── LOCATION MODAL ── -->
 <div class="modal-overlay" id="modal-location">
   <div class="modal-box">
     <span class="modal-close" onclick="closeModal('location')">✕ Close</span>
@@ -742,8 +745,11 @@
     <div class="modal-sub">Venue Details</div>
     <div class="modal-rule"></div>
     <div class="loc-address">
-      Le Méridien Cairo Airport<br>
-      Lotus Ballroom
+      Le Passage Cairo Hotel<br>
+    </div>
+    <div class="attention-box">
+      <div class="attn-title">Attention</div>
+      <div class="attn-text">Please do not use the main airport terminal gate.</div>
     </div>
     <div class="loc-map">
       <iframe
@@ -757,7 +763,6 @@
   </div>
 </div>
 
-<!-- REMOVED THE <SOURCE> TAG SO IT ONLY LOADS VIA JAVASCRIPT FETCH NOW -->
 <audio id="bgMusic" loop></audio>
 
 <div id="musicPlayer">
@@ -782,7 +787,7 @@
 
 <div id="loadingScreen">
   <img src="image4.png" alt="Logo" class="loading-logo">
-  <div class="loading-title">Aya & MAHMOUD</div>
+  <div class="loading-title">Shady & Reynad</div>
   <div class="loading-sub">Loading your invitation</div>
   <div class="loading-bar-wrap"><div class="loading-bar" id="loadingBar"></div></div>
   <div class="loading-dots"><span></span><span></span><span></span></div>
@@ -868,8 +873,7 @@
     const card = document.getElementById('card');
     card.classList.remove('full');
 
-    // Reset animations properly on close
-    card.querySelectorAll('.card-content > *, .main-names span').forEach(el => {
+    card.querySelectorAll('.intro-block > *, .time-block, .rsvp-location-block > *, .cloud-overlay, .main-names span').forEach(el => {
       el.style.animation = 'none';
       el.style.opacity = '0';
     });
@@ -929,8 +933,7 @@
         card.style.opacity = '0';
         document.getElementById('hint').classList.remove('hidden');
         
-        // Remove 'none' animation to reset for next opening
-        card.querySelectorAll('.card-content > *, .main-names span').forEach(el => {
+        card.querySelectorAll('.intro-block > *, .time-block, .rsvp-location-block > *, .cloud-overlay, .main-names span').forEach(el => {
           el.style.animation = '';
         });
       }, 1100);
@@ -957,16 +960,12 @@
     });
   });
 
-  /* =========================================================
-     RSVP GOOGLE SHEETS SUBMISSION SCRIPT
-     ========================================================= */
   function submitRSVP() {
     const name = document.getElementById('rsvpName').value.trim();
     const attend = document.getElementById('rsvpAttend').value;
     const guests = document.getElementById('rsvpGuests').value;
     const message = document.getElementById('rsvpDiet').value.trim();
 
-    // ✨ Added validation specifically for guests to be mandatory ✨
     if (!name || !attend || !guests) { 
       alert('Please fill in your name, attendance, and number of guests.'); 
       return; 
@@ -976,7 +975,6 @@
     submitBtn.innerText = 'Sending...';
     submitBtn.disabled = true;
 
-    // ✨ PASTE YOUR GOOGLE APPS SCRIPT URL HERE ✨
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyZ1dg8JTLenHRGKwiueH1Hzi7PngMviBTBydx1s4rj1GY_poRRrAMGfEAIgIBFR-oEwA/exec'; 
 
     const formData = new FormData();
@@ -1034,12 +1032,8 @@
     musicPlaying = !musicPlaying;
   }
 
-  // ─── Asset Preloader ─────────────────────────────────────────────────────
-  // Tracks: image1, image2, image3, image4, audio (5 assets = 20% each)
-  // The loading screen stays visible until every single asset is ready.
-
   var loadingBar   = document.getElementById('loadingBar');
-  var assetsTotal  = 5;   // 4 images + 1 audio
+  var assetsTotal  = 6;   
   var assetsLoaded = 0;
 
   function assetReady() {
@@ -1050,7 +1044,6 @@
   }
 
   function revealInvitation() {
-    // Small pause so the bar visually completes to 100% before fading
     setTimeout(function() {
       var screen = document.getElementById('loadingScreen');
       screen.classList.add('fade-out');
@@ -1058,38 +1051,28 @@
     }, 400);
   }
 
-  // Preload all 4 card/envelope images
-  ['image1.png', 'image2.png', 'image3.png', 'image4.png'].forEach(function(src) {
+  ['image1.jpg', 'image2.png', 'image3.png', 'image4.png', 'image6.gif'].forEach(function(src) {
     var img = new Image();
     img.onload  = assetReady;
-    img.onerror = assetReady; // count failures too so we never get stuck
+    img.onerror = assetReady; 
     img.src = src;
   });
 
-  // 🌟 FORCE MUSIC PRELOAD VIA FETCH 🌟
-  // Mobile browsers strictly block standard <audio> preloading to save data.
-  // We fetch the entire file as a Blob first — once response.blob() resolves,
-  // the COMPLETE file is already in device memory, so we mark it ready immediately.
-  // This guarantees zero buffering delay when the user taps to play.
   fetch('music1.mp3')
     .then(function(response) {
       if (!response.ok) throw new Error("Audio fetch failed");
-      return response.blob(); // ← entire MP3 is in memory once this resolves
+      return response.blob(); 
     })
     .then(function(blob) {
       var audioUrl = URL.createObjectURL(blob);
       music.src = audioUrl;
       music.load();
-      // The full file is already in RAM — no need to wait for canplaythrough.
-      // Mark ready right away so the loading screen can dismiss.
       if (!music.dataset.loaded) {
         music.dataset.loaded = 'true';
         assetReady();
       }
     })
     .catch(function(error) {
-      // fetch was blocked (some browsers/networks restrict it) — fall back to
-      // standard streaming and wait for enough data to play without interruption.
       console.warn("Audio pre-fetch blocked or failed, falling back to streaming.", error);
       music.src = 'music1.mp3';
       music.preload = 'auto';
@@ -1106,12 +1089,9 @@
         markLoaded();
       });
 
-      // Streaming fallback timeout — 12 s is generous for most mobile connections
       setTimeout(markLoaded, 12000);
     });
 
-  // Hard safety net: if ANY asset is still pending after 35 s, reveal anyway
-  // so guests are never stuck on the loading screen indefinitely.
   setTimeout(function() {
     if (assetsLoaded < assetsTotal) {
       assetsLoaded = assetsTotal;
@@ -1120,7 +1100,6 @@
     }
   }, 35000);
 
-  // Audio will automatically play as soon as the user taps anywhere to open the envelope
   document.addEventListener('click', function autoPlay() {
     if (!musicPlaying) {
       music.play().then(() => {
