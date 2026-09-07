@@ -538,21 +538,44 @@
     }
   }
 
-  let progress = 0;
-  const bar = document.getElementById('loadingBar');
-  const loadingInterval = setInterval(() => {
-    progress += Math.random() * 15 + 5;
-    if (progress >= 100) {
-      progress = 100;
-      clearInterval(loadingInterval);
-      setTimeout(() => {
-        var screen = document.getElementById('loadingScreen');
-        screen.classList.add('fade-out');
-        setTimeout(function() { screen.style.display = 'none'; }, 850);
-      }, 400);
-    }
-    bar.style.width = progress + '%';
-  }, 200);
+  var bar = document.getElementById('loadingBar');
+
+  function finishLoading() {
+    var screen = document.getElementById('loadingScreen');
+    screen.classList.add('fade-out');
+    setTimeout(function() { screen.style.display = 'none'; }, 850);
+  }
+
+  // Preload every image the invitation actually renders, so the client
+  // never sees a background image pop in after the loading screen hides.
+  var assetsToPreload = ['image1.jpg', 'image2.png', 'image3.png', 'image6.gif'];
+  var totalAssets = assetsToPreload.length;
+  var loadedAssets = 0;
+
+  function bumpProgress() {
+    loadedAssets++;
+    var pct = Math.round((loadedAssets / totalAssets) * 100);
+    bar.style.width = pct + '%';
+  }
+
+  function preloadImage(src) {
+    return new Promise(function(resolve) {
+      var img = new Image();
+      img.onload = function() { bumpProgress(); resolve(); };
+      // Never let one broken/missing file block the whole invitation open.
+      img.onerror = function() { bumpProgress(); resolve(); };
+      img.src = src;
+    });
+  }
+
+  var allImagesLoaded = Promise.all(assetsToPreload.map(preloadImage));
+  // Small floor so the loading screen doesn't flash instantly on a warm cache.
+  var minDisplayTime = new Promise(function(resolve) { setTimeout(resolve, 500); });
+
+  Promise.all([allImagesLoaded, minDisplayTime]).then(function() {
+    bar.style.width = '100%';
+    setTimeout(finishLoading, 250);
+  });
 </script>
 </body>
 </html>
