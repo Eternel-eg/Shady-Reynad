@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Reynad & Shady — Wedding Invitation</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
@@ -164,7 +164,7 @@
     opacity: 0; pointer-events: none; overflow: hidden;
   }
   .card.full { background-size: contain !important; background-position: center center !important; background-color: #d8ccba !important; display: flex; align-items: center; justify-content: center; }
-  .card-inner { opacity: 0; pointer-events: none; aspect-ratio: 25.54 / 76.62; width: 100%; max-width: calc(100dvh * 25.54 / 76.62); max-height: 100dvh; margin: auto; position: relative; z-index: 10; container-type: size; }
+  .card-inner { opacity: 0; pointer-events: none; aspect-ratio: 1088 / 3910; width: 100%; max-width: calc(100dvh * 1088 / 3910); max-height: 100dvh; margin: auto; position: relative; z-index: 10; container-type: size; }
   .card.full .card-inner { pointer-events: all; opacity: 1; }
 
   /* Animations - Stabilized with Soft Shine */
@@ -230,12 +230,17 @@
   @media (max-width: 600px) {
     body { padding-top: 8px; }
     .scene { transform: scale(calc(100vw / 565)); margin-bottom: calc((100vw / 565 - 1) * 800px); }
-    .card.full { background-image: none !important; align-items: stretch !important; overflow-y: auto; }
-    .card-inner { width: max(100%, calc(100dvh * 25.54 / 76.62)); height: auto; background: url('image1.jpg') center/cover no-repeat; }
-    .sub-text { font-size: min(1.8vh, 4.2vw); }
-    .main-names { font-size: min(4vh, 9vw); gap: 0.6vh; }
-    .pill-btn { font-size: min(1.4vh, 3.2vw); padding: 0.8vh 3.5vw; }
-    .closing-note { font-size: min(3.5vh, 7vw); }
+    .card.full { background-image: none !important; align-items: stretch !important; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    /* card-inner must keep a DEFINITE height (not auto) so container-query units
+       (cqh) stay valid and scale proportionally with each device's screen width.
+       This single ratio drives every cqh-based font size below it. */
+    .card-inner {
+      width: 100%;
+      max-width: 100%;
+      height: calc(100vw * 3910 / 1088);
+      max-height: none;
+      background: url('image1.jpg') center/cover no-repeat;
+    }
   }
 </style>
 </head>
@@ -268,14 +273,16 @@
       <div class="time-block date-time" style="--shift: 0px; --vshift:-20px;">at 5:00 PM</div>
 
       <div class="rsvp-location-block" style="--shift: 0px; --vshift: 0px;">
-        <div class="venue-location" style="--shift: 0px; --vshift: 0px;">Le Passage Cairo Hotel</div>
+        <div class="venue-location" style="--shift: 0px; --vshift: -60px;">Le Passage Cairo </br>Hotel</div>
         <button class="pill-btn" onclick="openLocation(event)" style="--shift: 0px; --vshift: 0px;">Location</button>
         
-        <div class="sub-text dark" style="--shift: 0px; --vshift: 0px;">Dress Code<br>Garden Formal</div>
+        <div class="sub-text dark" style="font-size: 1.4cqh; --shift: 0px; --vshift: 0px;">
+  	Dress Code<br>Garden Formal
+	</div>
         
-        <div class="sub-text dark" style="--shift: 0px; --vshift: 5px;">Répondez s'il vous plaît</div>
+        <div class="sub-text dark" style="font-size: 1.4cqh; --shift: 0px; --vshift: 10px;">Répondez s'il vous plaît</div>
         <button class="pill-btn" onclick="openModal('rsvp', event)" style="--shift: 0px; --vshift: 0px;">RSVP</button>
-        <div class="closing-note" style="--shift: 0px; --vshift: 50px;">With all our love,<br>Reynad &amp; Shady</div>
+        <div class="closing-note" style="--shift: 0px; --vshift: 20px;">With all our love,<br>Reynad &amp; Shady</div>
       </div>
 
     </div>
