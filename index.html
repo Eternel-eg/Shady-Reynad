@@ -161,8 +161,8 @@
   .card.full .intro-block > *:nth-child(3) { animation: luxuryReveal 1s ease 0.8s forwards; }
 
   .main-names span:not(.amp), .main-names span.amp {
-    background: linear-gradient(115deg, var(--ink-light) 30%, #fffdf6 50%, var(--ink-light) 70%); background-size: 260% 100%; background-position: 200% 0;
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    color: var(--ink-light);
+    -webkit-text-fill-color: var(--ink-light);
   }
   
   .card.full .main-names span:nth-child(1) { animation: nameReveal 1.4s ease 1.0s forwards, softShine 4s ease-in-out 2.4s infinite; }
@@ -194,8 +194,8 @@
   }
 
   @keyframes softShine {
-    0%, 100% { text-shadow: 1px 1px 5px rgba(0,0,0,0.7), 0 0 2px rgba(240, 220, 160, 0.1); color: var(--ink-light); }
-    50% { text-shadow: 1px 1px 5px rgba(0,0,0,0.7), 0 0 15px rgba(255, 235, 170, 0.5); color: #ffffff; }
+    0%, 100% { text-shadow: 1px 1px 5px rgba(0,0,0,0.7), 0 0 2px rgba(240, 220, 160, 0.1); color: var(--ink-light); -webkit-text-fill-color: var(--ink-light); }
+    50% { text-shadow: 1px 1px 5px rgba(0,0,0,0.7), 0 0 15px rgba(255, 235, 170, 0.5); color: #ffffff; -webkit-text-fill-color: #ffffff; }
   }
 
   .close-btn {
@@ -308,7 +308,7 @@
     <div class="card-inner">
       <img class="cloud-overlay" src="image6.gif" alt="" aria-hidden="true">
 
-      <div class="intro-block" style="--shift: 0px; --vshift: 30px;">
+      <div class="intro-block" style="--shift: 0px; --vshift: 80px;">
         <div class="sub-text" style="--shift: 0px; --vshift: 0px; font-size: 1.1cqh; letter-spacing: 0.1em; margin-bottom: 0.5cqh;">
           Ibrahim Eid<br><br>
           <span class="amp" style="font-size: 1.2em;">&amp;</span><br><br>
@@ -321,19 +321,19 @@
           THE WEDDING OF
         </div>
         
-        <div class="main-names" style="--shift: 0px; --vshift: 10px;">
+        <div class="main-names" style="--shift: 0px; --vshift: 50px;">
           <span>Reynad</span>
           <span class="amp">&amp;</span>
           <span>Shady</span>
         </div>
       </div>
 
-      <div class="time-block date-time" style="--shift: 0px; --vshift: 50px;">
+      <div class="time-block date-time" style="--shift: 0px; --vshift: 380px;">
         <div style="font-size: 1.4cqh; margin-bottom: -0.3cqh; letter-spacing: 0.12em;"></div>
         <div style="font-size: 1.2cqh; letter-spacing: 0.12em;">AT 5:00 PM</div>
       </div>
 
-      <div class="rsvp-location-block" style="--shift: 0px; --vshift: 25px;">
+      <div class="rsvp-location-block" style="--shift: 0px; --vshift: 120px;">
         <div class="venue-location" style="--shift: 0px; --vshift: 0px; font-size: 1.1cqh; margin-bottom: 0.2cqh;">
           LE PASSAGE CAIRO HOTEL
         </div>
