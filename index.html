@@ -106,12 +106,13 @@
     font-weight: 500;
     letter-spacing: 0.1em;
     text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+    transform: translate(var(--shift, 0px), var(--vshift, 0px));
   }
 
   .cloud-overlay { position: absolute; top: 0; left: 0; width: 100%; height: auto; z-index: 1; pointer-events: none; }
 
   .intro-block {
-    position: absolute; top: 8%; left: 50%; transform: translateX(-50%); width: 92%; z-index: 5;
+    position: absolute; top: calc(8% + var(--vshift, 0px)); left: 50%; transform: translate(calc(-50% + var(--shift, 0px)), 0); width: 92%; z-index: 5;
     display: flex; flex-direction: column; align-items: center; gap: 1.2cqh; opacity: 1;
   }
   .intro-block > * { opacity: 0; }
@@ -144,11 +145,12 @@
 
   .pill-btn {
     font-family: 'Cinzel', serif; font-size: 1.0cqh; letter-spacing: .15em; font-weight: 600; text-transform: uppercase;
-    color: var(--pill-text); background: transparent; border: 1px solid var(--pill-text); border-radius: 999px;
+    color: var(--pill-text); background: transparent; border: 1px solid #C4A484; border-radius: 999px;
     padding: 0.8cqh 3.5cqw; cursor: pointer; transition: all 0.3s ease; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     box-shadow: 0 2px 8px rgba(0,0,0,0.15); display: block; margin: 0 auto; width: fit-content;
+    transform: translateX(var(--shift, 0px)); margin-top: var(--vshift, 0px);
   }
-  .pill-btn:hover, .pill-btn:active { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+  .pill-btn:hover, .pill-btn:active { background: rgba(255,255,255,0.15); transform: translate(var(--shift, 0px), -2px); }
 
   .scene { perspective: 1400px; cursor: pointer; position: relative; width: 565px; height: 800px; transform-origin: top center; }
   .env-body { position: absolute; inset: 0; z-index: 3; }
@@ -215,9 +217,142 @@
   .petal { position: fixed; width: 8px; height: 13px; border-radius: 50% 50% 50% 0; opacity: 0; pointer-events: none; animation: fall linear forwards; z-index: 100; }
   @keyframes fall { from { opacity:.75; transform: translateY(-20px) rotate(0deg); } to { opacity:0; transform: translateY(110vh) rotate(400deg); } }
 
-  .modal-overlay { position: fixed; inset: 0; background: rgba(40,28,16,0.65); backdrop-filter: blur(8px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; padding: 16px; }
+  /* ===== Modern themed RSVP / Location modals ===== */
+  :root {
+    --m-green-deep: #4a5a3f;
+    --m-green: #7a8f68;
+    --m-green-soft: rgba(122,143,104,0.35);
+    --m-gold: #b8935a;
+    --m-gold-light: #d9b877;
+    --m-cream: #faf5ea;
+    --m-cream-soft: #f2ead9;
+    --m-text: #4a3f2e;
+  }
+
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(30,26,16,0.62);
+    backdrop-filter: blur(10px);
+    z-index: 200; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 20px;
+  }
   .modal-overlay.show { opacity: 1; pointer-events: all; }
-  .modal-box { background: #f8f3eb; border: 1px solid rgba(157,170,134,0.4); padding: 44px 36px 36px; max-width: 440px; width: 100%; text-align: center; position: relative; }
+
+  .modal-box {
+    background: var(--m-cream);
+    border: 1px solid var(--m-green-soft);
+    border-radius: 6px;
+    padding: 38px 30px 32px;
+    max-width: 400px; width: 100%;
+    text-align: center; position: relative;
+    box-shadow: 0 18px 50px rgba(20,20,10,0.35), inset 0 0 0 5px rgba(255,255,255,0.5);
+    font-family: 'Cinzel', serif;
+    animation: modalRise 0.45s cubic-bezier(0.25,0.8,0.4,1);
+    max-height: 88vh; overflow-y: auto;
+  }
+  @keyframes modalRise { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+  .modal-close {
+    position: absolute; top: 14px; right: 16px; cursor: pointer;
+    color: var(--m-green); font-size: 0.7rem; letter-spacing: 0.12em;
+    border: 1px solid var(--m-green-soft); border-radius: 50%;
+    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.25s ease; background: rgba(255,255,255,0.4);
+  }
+  .modal-close:hover { background: var(--m-green); color: #fff; border-color: var(--m-green); }
+
+  .modal-crest {
+    font-family: 'Cinzel Decorative', serif; color: var(--m-gold);
+    font-size: 1.05rem; letter-spacing: 0.05em; margin-bottom: 6px;
+  }
+  .modal-divider {
+    width: 60px; height: 1px; margin: 10px auto 18px; position: relative;
+    background: linear-gradient(90deg, transparent, var(--m-gold-light), transparent);
+  }
+  .modal-divider::before {
+    content: '❖'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    color: var(--m-gold); font-size: 0.6rem; background: var(--m-cream); padding: 0 8px;
+  }
+
+  .modal-title {
+    color: var(--m-green-deep); font-size: 1.5rem; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .modal-subtitle {
+    color: var(--m-gold); font-size: 0.78rem; letter-spacing: 0.1em;
+    text-transform: none; font-family: 'Pinyon Script', cursive; font-size: 1.3rem;
+    margin-bottom: 4px;
+  }
+  .modal-note {
+    font-size: 0.78rem; color: var(--m-text); opacity: 0.75; line-height: 1.5;
+    letter-spacing: 0.02em; text-transform: none; margin-bottom: 22px;
+  }
+
+  .field-group { text-align: left; margin-bottom: 16px; position: relative; }
+  .field-label {
+    display: block; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--m-green); margin-bottom: 6px; font-weight: 600;
+  }
+  .modern-input, .modern-select, .modern-textarea {
+    width: 100%; font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.02em;
+    text-transform: none; color: var(--m-text); background: rgba(255,255,255,0.55);
+    border: none; border-bottom: 1.5px solid var(--m-green-soft);
+    padding: 11px 4px; outline: none; transition: border-color 0.25s ease, background 0.25s ease;
+    border-radius: 3px 3px 0 0;
+    appearance: none; -webkit-appearance: none;
+  }
+  .modern-input:focus, .modern-select:focus, .modern-textarea:focus {
+    border-bottom-color: var(--m-gold); background: rgba(255,255,255,0.85);
+  }
+  .modern-textarea { resize: none; min-height: 68px; font-family: 'Cinzel', serif; line-height: 1.5; }
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: '▾'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    color: var(--m-gold); pointer-events: none; font-size: 0.75rem;
+  }
+  .guest-toggle {
+    display: flex; gap: 8px; border-bottom: 1.5px solid var(--m-green-soft); padding-bottom: 10px;
+  }
+  .toggle-btn {
+    flex: 1; padding: 10px 8px; border-radius: 999px; border: 1px solid var(--m-gold-light);
+    background: transparent; color: var(--m-text); font-family: 'Cinzel', serif;
+    font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .toggle-btn:hover { border-color: var(--m-gold); }
+  .toggle-btn.active {
+    background: linear-gradient(135deg, var(--m-gold-light), var(--m-gold));
+    color: #fff; border-color: var(--m-gold); box-shadow: 0 4px 12px rgba(184,147,90,0.35);
+  }
+
+  .modal-submit-btn {
+    width: 100%; margin-top: 6px;
+    background: linear-gradient(135deg, var(--m-gold-light), var(--m-gold));
+    color: #fff; padding: 13px 20px; border: none; border-radius: 999px;
+    font-family: 'Cinzel', serif; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 600; cursor: pointer; box-shadow: 0 6px 16px rgba(184,147,90,0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .modal-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(184,147,90,0.5); }
+
+  .info-box {
+    text-align: left; background: rgba(122,143,104,0.08);
+    border-left: 3px solid var(--m-gold); border-radius: 0 4px 4px 0;
+    padding: 12px 14px; margin-bottom: 20px;
+  }
+  .info-box strong {
+    color: var(--m-green-deep); font-size: 0.68rem; letter-spacing: 0.12em; display: block; margin-bottom: 3px;
+  }
+  .info-box span { color: var(--m-text); font-size: 0.8rem; letter-spacing: 0.01em; text-transform: none; line-height: 1.4; display: block; }
+
+  .map-link-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; background: linear-gradient(135deg, var(--m-gold-light), var(--m-gold));
+    color: #fff; padding: 13px 20px; border-radius: 999px; text-decoration: none;
+    font-family: 'Cinzel', serif; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 600; box-shadow: 0 6px 16px rgba(184,147,90,0.4); transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .map-link-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(184,147,90,0.5); }
   
   #loadingScreen { position: fixed; inset: 0; background: radial-gradient(ellipse at 50% 40%, #ede5d8 0%, #d8ccba 60%, #c9bc9f 100%); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transition: opacity 0.8s ease; }
   #loadingScreen.fade-out { opacity: 0; pointer-events: none; }
@@ -271,19 +406,19 @@
         </div>
       </div>
 
-      <div class="time-block date-time" style="--shift: 0px; --vshift:-20px;">at 5:00 PM</div>
+      <div class="time-block date-time" style="--shift: 0px; --vshift:-40px;">at 5:00 PM</div>
 
-      <div class="rsvp-location-block" style="--shift: 0px; --vshift: 0px;">
-        <div class="venue-location" style="--shift: 0px; --vshift: -60px;">Le Passage Cairo </br>Hotel</div>
-        <button class="pill-btn" onclick="openLocation(event)" style="--shift: 0px; --vshift: 0px;">Location</button>
+      <div class="rsvp-location-block" style="--shift: 0px; --vshift: -30px;">
+        <div class="venue-location" style="--shift: 0px; --vshift: -5px;">Le Passage Cairo </br>Hotel</div>
+        <button class="pill-btn" onclick="openLocation(event)" style="--shift: 0px; --vshift: -5px;">Location</button>
         
-        <div class="sub-text dark" style="font-size: 1.4cqh; --shift: 0px; --vshift: 0px;">
+        <div class="sub-text dark" style="font-size: 1.4cqh; --shift: 0px; --vshift: 5px;">
   	Dress Code<br>Garden Formal
 	</div>
         
-        <div class="sub-text dark" style="font-size: 1.4cqh; --shift: 0px; --vshift: 10px;">Répondez s'il vous plaît</div>
+        <div class="sub-text dark" style="font-size: 1.4cqh; --shift: 0px; --vshift: 15px;">Répondez s'il vous plaît</div>
         <button class="pill-btn" onclick="openModal('rsvp', event)" style="--shift: 0px; --vshift: 0px;">RSVP</button>
-        <div class="closing-note" style="--shift: 0px; --vshift: 20px;">With all our love,<br>Reynad &amp; Shady</div>
+        <div class="closing-note" style="--shift: 0px; --vshift: 45px;">With all our love,<br>Reynad &amp; Shady</div>
       </div>
 
     </div>
@@ -297,32 +432,63 @@
 <!-- Modals -->
 <div class="modal-overlay" id="modal-rsvp">
   <div class="modal-box">
-    <span class="modal-close" onclick="closeModal('rsvp')" style="position:absolute; top:14px; right:16px; cursor:pointer; color:#9daa86;">✕ Close</span>
-    <h2 style="color:#9daa86; margin-bottom: 20px;">RSVP</h2>
-    <div style="color:#7a8f68; margin-bottom: 20px;">Your Presence Matters ♥️</div>
-    <div style="font-size: 0.85rem; color: #7a8f68; margin-bottom: 20px;">We love your kids, but thought you could use the night off! Adults-only, please.</div>
-    <div style="display:flex; flex-direction:column; gap:12px;">
-      <input type="text" placeholder="Your Full Name" style="padding:14px; border:1px solid rgba(157,170,134,0.4);" required>
-      <select style="padding:14px; border:1px solid rgba(157,170,134,0.4);" required>
-        <option value="" disabled selected>Will you attend?</option>
-        <option value="yes">Joyfully accepts</option>
-        <option value="no">Regretfully declines</option>
-      </select>
-      <button style="background:#9daa86; color:#fff; padding:14px 28px; border:none; cursor:pointer;" onclick="closeModal('rsvp')">Confirm Attendance</button>
-    </div>
+    <span class="modal-close" onclick="closeModal('rsvp')">✕</span>
+    <div class="modal-crest">R &amp; S</div>
+    <div class="modal-divider"></div>
+    <div class="modal-title">RSVP</div>
+    <div class="modal-subtitle">Your presence matters</div>
+    <div class="modal-note">We love your kids, but thought you could use the night off — adults only, please.</div>
+
+    <form id="rsvpForm" onsubmit="return submitRSVP(event)">
+      <div class="field-group">
+        <label class="field-label">Full Name</label>
+        <input class="modern-input" type="text" name="fullName" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Will you attend?</label>
+        <div class="select-wrap">
+          <select class="modern-select" name="attending" required>
+            <option value="" disabled selected>Choose an option</option>
+            <option value="yes">Joyfully accepts</option>
+            <option value="no">Regretfully declines</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Number of Guests (incl. +1)</label>
+        <div class="guest-toggle">
+          <button type="button" class="toggle-btn active" id="btnJustMe" onclick="setGuests(1)">Just Me</button>
+          <button type="button" class="toggle-btn" id="btnPlusOne" onclick="setGuests(2)">Me + 1</button>
+        </div>
+        <input type="hidden" name="guests" id="guestsInput" value="1">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Leave a message for the couple</label>
+        <textarea class="modern-textarea" name="message" placeholder="Write your wishes here..."></textarea>
+      </div>
+
+      <button type="submit" class="modal-submit-btn">Confirm Attendance</button>
+    </form>
   </div>
 </div>
 
 <div class="modal-overlay" id="modal-location">
   <div class="modal-box">
-    <span class="modal-close" onclick="closeModal('location')" style="position:absolute; top:14px; right:16px; cursor:pointer; color:#9daa86;">✕ Close</span>
-    <h2 style="color:#9daa86; margin-bottom: 20px;">Location</h2>
-    <div style="margin-bottom: 20px;">Le Passage Cairo Hotel</div>
-    <div style="background: rgba(157,170,134,0.08); border: 1px solid rgba(157,170,134,0.35); padding: 12px; margin-bottom: 16px;">
-      <strong style="color: #7a8f68; font-size: 0.8rem;">ATTENTION</strong><br>
-      <span style="color: #6a5030; font-size: 0.9rem;">Please do not use the main airport terminal gate.</span>
+    <span class="modal-close" onclick="closeModal('location')">✕</span>
+    <div class="modal-crest">R &amp; S</div>
+    <div class="modal-divider"></div>
+    <div class="modal-title">Location</div>
+    <div class="modal-subtitle">Le Passage Cairo Hotel</div>
+
+    <div class="info-box">
+      <strong>ATTENTION</strong>
+      <span>Please do not use the main airport terminal gate.</span>
     </div>
-    <a href="https://maps.app.goo.gl/y2Lcuy8S985G1Hce6" target="_blank" style="background:#9daa86; color:#fff; padding:13px 28px; text-decoration:none; display:inline-block;">📍 Open in Google Maps</a>
+
+    <a href="https://maps.app.goo.gl/y2Lcuy8S985G1Hce6" target="_blank" class="map-link-btn">📍 Open in Google Maps</a>
   </div>
 </div>
 
@@ -414,6 +580,19 @@
   function openModal(type, e) { if(e) e.stopPropagation(); document.getElementById('modal-' + type).classList.add('show'); }
   function closeModal(type) { document.getElementById('modal-' + type).classList.remove('show'); }
   function openLocation(e) { if(e) e.stopPropagation(); openModal('location', e); }
+
+  function setGuests(n) {
+    document.getElementById('guestsInput').value = n;
+    document.getElementById('btnJustMe').classList.toggle('active', n === 1);
+    document.getElementById('btnPlusOne').classList.toggle('active', n === 2);
+  }
+
+  function submitRSVP(e) {
+    e.preventDefault();
+    // TODO: hook this up to your form backend / email service of choice
+    closeModal('rsvp');
+    return false;
+  }
 
   function spawnPetals() {
     const colors = ['#e8c5b0','#d4bfa0','#c8d5b9','#f0e0d0','#f5e8d5','#e0d4c0'];
