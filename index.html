@@ -136,9 +136,19 @@
     border-radius: 2px; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
     opacity: 0; pointer-events: none; overflow: hidden;
   }
-  .card.full { background-size: contain !important; background-position: center center !important; background-color: #d8ccba !important; display: flex; align-items: center; justify-content: center; }
+  .card.full {
+    background-image: none !important;
+    display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start;
+    overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
+  }
   .card-inner { opacity: 0; pointer-events: none; aspect-ratio: 1088 / 3910; width: 100%; max-width: calc(100dvh * 1088 / 3910); max-height: 100dvh; margin: auto; position: relative; z-index: 10; container-type: size; }
-  .card.full .card-inner { pointer-events: all; opacity: 1; }
+  .card.full .card-inner {
+    pointer-events: all; opacity: 1;
+    width: 100%; max-width: 100%; max-height: none;
+    height: calc(100vw * 3910 / 1088);
+    background: url('image1.jpg') top center/contain no-repeat;
+    background-color: #d8ccba;
+  }
 
   /* Animations - Stabilized with Soft Shine */
   .cloud-overlay { opacity: 0; animation: luxuryReveal 1.6s ease forwards; }
@@ -287,11 +297,6 @@
   @media (max-width: 600px) {
     body { padding-top: 8px; }
     .scene { transform: scale(calc(100vw / 565)); margin-bottom: calc((100vw / 565 - 1) * 800px); }
-    .card.full { background-image: none !important; align-items: stretch !important; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
-    .card-inner {
-      width: 100%; max-width: 100%; height: calc(100vw * 3910 / 1088); max-height: none;
-      background: url('image1.jpg') top center/contain no-repeat; background-color: #d8ccba;
-    }
   }
 </style>
 </head>
