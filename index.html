@@ -607,19 +607,46 @@
 
   let progress = 0;
   const bar = document.getElementById('loadingBar');
-  const loadingInterval = setInterval(() => {
-    progress += Math.random() * 15 + 5;
-    if (progress >= 100) {
-      progress = 100;
-      clearInterval(loadingInterval);
-      setTimeout(() => {
-        var screen = document.getElementById('loadingScreen');
-        screen.classList.add('fade-out');
-        setTimeout(function() { screen.style.display = 'none'; }, 850);
-      }, 400);
-    }
+  const assetUrls = ['image1.jpg', 'image2.png', 'image3.png', 'image4.png', 'image6.gif'];
+  let loadedCount = 0;
+  const totalAssets = assetUrls.length;
+
+  function updateBar() {
+    const pct = totalAssets ? (loadedCount / totalAssets) * 100 : 100;
+    progress = Math.max(progress, pct);
     bar.style.width = progress + '%';
-  }, 200);
+  }
+
+  function finishLoading() {
+    progress = 100;
+    bar.style.width = '100%';
+    setTimeout(() => {
+      var screen = document.getElementById('loadingScreen');
+      screen.classList.add('fade-out');
+      setTimeout(function() { screen.style.display = 'none'; }, 850);
+    }, 350);
+  }
+
+  function preloadAssets() {
+    if (totalAssets === 0) { finishLoading(); return; }
+    let settled = 0;
+    assetUrls.forEach(src => {
+      const img = new Image();
+      const onDone = () => {
+        loadedCount++;
+        settled++;
+        updateBar();
+        if (settled === totalAssets) finishLoading();
+      };
+      img.onload = onDone;
+      img.onerror = onDone; // don't let a missing asset hang the loader forever
+      img.src = src;
+    });
+    // Safety net: never block the invitation longer than 8s even if an asset stalls
+    setTimeout(() => { if (progress < 100) finishLoading(); }, 8000);
+  }
+
+  preloadAssets();
 
 </script>
 </body>
