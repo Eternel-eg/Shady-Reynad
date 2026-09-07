@@ -110,7 +110,7 @@
 
   .closing-note {
     font-family: 'Pinyon Script', cursive; text-transform: none; color: var(--ink-dark); 
-    font-size: 2cqh; font-weight: 400; letter-spacing: 0.04em; margin-top: calc(1cqh + var(--vshift, 0px)); 
+    font-size: 1.1cqh; font-weight: 400; letter-spacing: 0.04em; margin-top: calc(1cqh + var(--vshift, 0px)); 
     text-shadow: 1px 1px 2px rgba(255,255,255,0.6); transform: translateX(var(--shift, 0px)); line-height: 1.2;
   }
 
@@ -187,8 +187,23 @@
     50% { text-shadow: 1px 1px 5px rgba(0,0,0,0.7), 0 0 15px rgba(255, 235, 170, 0.5); color: #ffffff; }
   }
 
-  .close-btn { position: absolute; top: 24px; right: 28px; font-size: clamp(0.75rem, 1.8vw, 0.95rem); letter-spacing: .15em; color: #9daa86; cursor: pointer; opacity: 0; border: 1px solid rgba(157,170,134,0.4); padding: 10px 20px; border-radius: 2px; pointer-events: none; z-index: 20; background: rgba(20,15,5,0.7); backdrop-filter: blur(4px); }
-  .card.full .close-btn { opacity: 1; pointer-events: all; transition: opacity 0.8s ease 3.5s; }
+  .close-btn {
+    position: fixed;
+    top: calc(env(safe-area-inset-top, 0px) + 14px);
+    right: calc(env(safe-area-inset-right, 0px) + 14px);
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem; line-height: 1;
+    color: #f3ead2;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.55);
+    cursor: pointer;
+    background: transparent; border: none; padding: 0; border-radius: 0;
+    opacity: 0; pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.4s ease, color 0.2s ease, transform 0.2s ease;
+  }
+  .close-btn:hover, .close-btn:active { color: #ffffff; transform: scale(0.94); }
+  .close-btn.show { opacity: 1; pointer-events: all; transition: opacity 0.8s ease 3.5s; }
 
   .hint { margin-top: -65px; position: relative; z-index: 20; font-size: clamp(1rem, 3.5vw, 1.2rem); color: #4a3418; letter-spacing: .08em; transition: opacity .4s; text-align: center; }
   .hint.hidden { opacity:0; pointer-events:none; }
@@ -272,7 +287,7 @@
   @media (max-width: 600px) {
     body { padding-top: 8px; }
     .scene { transform: scale(calc(100vw / 565)); margin-bottom: calc((100vw / 565 - 1) * 800px); }
-    .card.full { background-image: none !important; align-items: stretch !important; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .card.full { background-image: none !important; align-items: stretch !important; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
     .card-inner {
       width: 100%; max-width: 100%; height: calc(100vw * 3910 / 1088); max-height: none;
       background: url('image1.jpg') top center/contain no-repeat; background-color: #d8ccba;
@@ -284,7 +299,6 @@
 
 <div class="scene" id="scene" onclick="startOpen()">
   <div class="card" id="card">
-    <div class="close-btn" id="closeBtn">✕ &nbsp; Close</div>
     <div class="card-inner">
       <img class="cloud-overlay" src="image6.gif" alt="" aria-hidden="true">
 
@@ -313,7 +327,7 @@
         <div style="font-size: 1.2cqh; letter-spacing: 0.12em;">AT 5:00 PM</div>
       </div>
 
-      <div class="rsvp-location-block" style="--shift: 0px; --vshift: 15px;">
+      <div class="rsvp-location-block" style="--shift: 0px; --vshift: 25px;">
         <div class="venue-location" style="--shift: 0px; --vshift: 0px; font-size: 1.1cqh; margin-bottom: 0.2cqh;">
           LE PASSAGE CAIRO HOTEL
         </div>
@@ -325,15 +339,15 @@
 
         <div class="separator"><span class="separator-icon">♦</span></div>
         
-        <div class="sub-text dark" style="font-size: 1cqh; font-weight: 600; letter-spacing: 0.15em;margin-top: -0.8cqh;">DRESS CODE</div>
-        <div style="font-size: 1.4cqh; letter-spacing: 0.15em; color: var(--ink-dark); margin-top: 0.2cqh; margin-bottom: -1.8cqh;">GARDEN FORMAL</div>
+        <div class="sub-text dark" style="font-size: 1cqh; font-weight: 600; letter-spacing: 0.15em;margin-top: -0.2cqh;">DRESS CODE</div>
+        <div style="font-size: 1.4cqh; letter-spacing: 0.15em; color: var(--ink-dark); margin-top: 0.2cqh; margin-bottom: -2.5cqh;">GARDEN FORMAL</div>
         <div class="sub-text dark" style="font-size: 0.75cqh; max-width: 80%; line-height: 1.3; opacity: 0.9;">
           THINK FLOWY FABRICS, REFINED SILHOUETTES<br>AND COMFORTABLE FOOTWEAR.
         </div>
         
         <div class="separator"><span class="separator-icon">♦</span></div>
 
-        <div class="sub-text dark" style="font-size: 1cqh; font-weight: 600; letter-spacing: 0.15em;margin-top: -0.8cqh;">A KIND NOTE</div>
+        <div class="sub-text dark" style="font-size: 1cqh; font-weight: 600; letter-spacing: 0.15em;margin-top: -0.2cqh;">A KIND NOTE</div>
         <div style="font-size: 1.4cqh; color: var(--ink-dark); margin-top: -0.2cqh;">❦</div>
         <div class="sub-text dark" style="font-size: 0.75cqh; max-width: 80%; line-height: 1.3; margin-top: -0.2cqh; opacity: 0.9;">
           LET THE LITTLE ONES ENJOY A NIGHT AT HOME<br>WHILE YOU JOIN US FOR AN EVENING<br>OF CELEBRATION!
@@ -341,7 +355,7 @@
 
         <button class="pill-btn" onclick="openModal('rsvp', event)" style="--shift: 0px; --vshift: 0px; margin-top: 0.8cqh;">RSVP</button>
         
-        <div class="closing-note" style="--shift: 0px; --vshift: 0px;">With all our love,<br>Reynad <span style="font-family: 'Cinzel Decorative', serif; font-size: 0.8em;">&amp;</span> Shady<br> &#9829;</div>
+        <div class="closing-note" style="--shift: 0px; --vshift: 0px;">With all our love,<br>Reynad <span style="font-family: 'Cinzel Decorative', serif; font-size: 0.5em;">&amp;</span> Shady<br> &#9829;</div>
       </div>
 
     </div>
@@ -349,6 +363,8 @@
   <div class="env-body"><img src="image2.png" alt="Envelope"></div>
   <div class="env-flap" id="flap"><img src="image3.png" alt="Envelope Flap"></div>
 </div>
+
+<div class="close-btn" id="closeBtn" aria-label="Close invitation" role="button">✕</div>
 
 <div class="hint" id="hint"></br>✦ Click to open your invitation ✦</div>
 
@@ -460,7 +476,7 @@
     card.style.width = window.innerWidth + 'px'; card.style.height = window.innerHeight + 'px';
     card.style.border = 'none'; card.style.pointerEvents = 'all';
 
-    setTimeout(() => { card.style.width = '100%'; card.style.height = '100%'; card.classList.add('full'); state = 'full'; }, 920);
+    setTimeout(() => { card.style.width = '100%'; card.style.height = '100%'; card.classList.add('full'); state = 'full'; document.getElementById('closeBtn').classList.add('show'); }, 920);
   }
 
   function closeCard() {
@@ -468,6 +484,7 @@
     state = 'shrinking';
     const card = document.getElementById('card');
     card.classList.remove('full');
+    document.getElementById('closeBtn').classList.remove('show');
     
     const scene = document.getElementById('scene');
     const sceneRect = scene.getBoundingClientRect();
