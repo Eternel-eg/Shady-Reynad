@@ -96,8 +96,10 @@ body {
 
 .parents {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  gap: 0.7em;
 
   font-family: 'Cinzel', serif;
 
@@ -108,6 +110,7 @@ body {
   line-height: 1.35;
 
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .parents-and {
@@ -118,7 +121,8 @@ body {
   text-transform: none;
   letter-spacing: 0;
 
-  margin: -0.1cqh 0;
+  margin: 0;
+  flex-shrink: 0;
 }
 
 
@@ -542,7 +546,7 @@ body {
 
   letter-spacing: 0;
 
-  margin-top: -0.05cqh;
+  margin-top: -0.1cqh;
 
   text-shadow:
     1px 1px 2px rgba(255,255,255,0.6);
@@ -813,35 +817,14 @@ body {
 
   flex-grow: 0;
 
+  background:
+    url('image1.jpg')
+    top center /
+    contain
+    no-repeat;
+
   background-color:
     #d8ccba;
-}
-
-/* Rendered as a real <img> (see .bg-fill below) instead of a CSS
-   background-image: iOS Safari splits very tall background images
-   into separate GPU tiles and shows a hairline seam at the tile
-   boundary. A regular <img> element does not hit that bug. */
-.bg-fill {
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-  object-position: top center;
-
-  z-index: 0;
-
-  pointer-events: none;
-
-  display: none;
-}
-
-.card.full .bg-fill {
-  display: block;
 }
 
 
@@ -2220,18 +2203,10 @@ span:nth-child(3) {
     <div class="card-inner">
 
       <img
-        class="bg-fill"
-        src="image1.jpg"
-        alt=""
-        aria-hidden="true"
-      >
-
-      <img
         class="cloud-overlay"
         src="image6.gif"
         alt=""
         aria-hidden="true"
-        onerror="this.style.display='none';"
       >
 
 
@@ -2243,7 +2218,7 @@ span:nth-child(3) {
         class="intro-block"
         style="
           --shift: 0px;
-          --vshift: 20px;
+          --vshift: 15px;
         "
       >
 
@@ -2252,17 +2227,17 @@ span:nth-child(3) {
           class="sub-text parents"
           style="
             --shift: 0px;
-            --vshift: 0px;
+            --vshift: 30px;
           "
         >
 
-          IBRAHIM EID
+          IBRAHIM </br>EID
 
           <span class="parents-and">
             and
           </span>
 
-          FAREED EL-GAZZAR
+          FAREED </br>EL-GAZZAR
 
         </div>
 
@@ -2531,7 +2506,7 @@ span:nth-child(3) {
 <div
   class="hint"
   id="hint"
-></br>
+>
   ✦ Click to open your invitation ✦
 </div>
 
@@ -2761,7 +2736,7 @@ span:nth-child(3) {
 
 
     <a
-      href="https://maps.app.goo.gl/U2NB1zkbnfiXBTki7"
+      href="https://maps.app.goo.gl/y2Lcuy8S985G1Hce6"
       target="_blank"
       class="map-link-btn"
     >
