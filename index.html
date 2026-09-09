@@ -1889,6 +1889,62 @@ span:nth-child(3) {
     0.2s ease;
 }
 
+.modal-submit-btn:disabled {
+  opacity: 0.6;
+
+  cursor: default;
+
+  transform: none;
+}
+
+.rsvp-error {
+  display: none;
+
+  font-size: 0.72rem;
+
+  letter-spacing: 0.02em;
+
+  color: #c0554a;
+
+  margin: -6px 0 14px;
+
+  text-align: center;
+}
+
+.rsvp-error.visible {
+  display: block;
+}
+
+.rsvp-success {
+  display: none;
+
+  text-align: center;
+
+  padding: 10px 0 4px;
+}
+
+.rsvp-success.visible {
+  display: block;
+}
+
+.rsvp-success-icon {
+  font-family: 'Cinzel', serif;
+
+  font-size: 1.6rem;
+
+  color: var(--m-gold);
+
+  margin-bottom: 12px;
+}
+
+.rsvp-success-text {
+  font-size: 0.85rem;
+
+  line-height: 1.6;
+
+  opacity: 0.85;
+}
+
 .modal-submit-btn:hover {
   transform:
     translateY(-2px);
@@ -2574,6 +2630,13 @@ span:nth-child(3) {
       onsubmit="return submitRSVP(event)"
     >
 
+      <div
+        class="rsvp-error"
+        id="rsvpError"
+      >
+        Something went wrong. Please try again.
+      </div>
+
       <!-- Full Name -->
       <div class="field-group">
 
@@ -2689,11 +2752,24 @@ span:nth-child(3) {
       <button
         type="submit"
         class="modal-submit-btn"
+        id="rsvpSubmitBtn"
       >
         Confirm Attendance
       </button>
 
     </form>
+
+    <div
+      class="rsvp-success"
+      id="rsvpSuccess"
+    >
+      <div class="rsvp-success-icon">
+        &#10022;
+      </div>
+      <div class="rsvp-success-text">
+        Thank you — your RSVP has been received.
+      </div>
+    </div>
 
   </div>
 
@@ -3158,6 +3234,43 @@ function closeModal(type) {
     )
     .classList
     .remove('show');
+
+  if (type === 'rsvp') {
+
+    setTimeout(
+      resetRSVPForm,
+      400
+    );
+  }
+}
+
+function resetRSVPForm() {
+
+  const form =
+    document.getElementById('rsvpForm');
+
+  const btn =
+    document.getElementById('rsvpSubmitBtn');
+
+  form.reset();
+
+  form.style.display = '';
+
+  btn.disabled = false;
+
+  btn.textContent = 'Confirm Attendance';
+
+  document
+    .getElementById('rsvpError')
+    .classList
+    .remove('visible');
+
+  document
+    .getElementById('rsvpSuccess')
+    .classList
+    .remove('visible');
+
+  setGuests(1);
 }
 
 
@@ -3208,11 +3321,86 @@ function setGuests(n) {
    RSVP
    ========================================================= */
 
+/* Paste the Web App URL from your Google Apps Script
+   deployment here (Deploy > New deployment > Web app). */
+const RSVP_SCRIPT_URL =
+  'https://script.google.com/macros/s/AKfycby3cuE1iqsbII8lq3FC2gfkxebYA-fIXzQr8yktov63fUrJYQgJOKpQDs2iDRr0F8ulpQ/exec';
+
 function submitRSVP(e) {
 
   e.preventDefault();
 
-  closeModal('rsvp');
+  const form =
+    document.getElementById('rsvpForm');
+
+  const btn =
+    document.getElementById('rsvpSubmitBtn');
+
+  const errorBox =
+    document.getElementById('rsvpError');
+
+  errorBox.classList.remove('visible');
+
+  if (
+    !RSVP_SCRIPT_URL ||
+    RSVP_SCRIPT_URL.indexOf('PASTE_YOUR') === 0
+  ) {
+
+    console.error(
+      'RSVP_SCRIPT_URL is not set. Paste your Apps Script web app URL into submitRSVP().'
+    );
+
+    errorBox.textContent =
+      'RSVP is not connected yet.';
+
+    errorBox.classList.add('visible');
+
+    return false;
+  }
+
+  const data = new FormData(form);
+
+  btn.disabled = true;
+
+  btn.textContent = 'Sending...';
+
+  fetch(
+    RSVP_SCRIPT_URL,
+    {
+      method: 'POST',
+      mode: 'no-cors',
+      body: data
+    }
+  )
+    .then(
+      () => {
+
+        form.style.display = 'none';
+
+        document
+          .getElementById('rsvpSuccess')
+          .classList
+          .add('visible');
+      }
+    )
+    .catch(
+      (err) => {
+
+        console.error(
+          'RSVP submission failed:',
+          err
+        );
+
+        errorBox.textContent =
+          'Something went wrong. Please try again.';
+
+        errorBox.classList.add('visible');
+
+        btn.disabled = false;
+
+        btn.textContent = 'Confirm Attendance';
+      }
+    );
 
   return false;
 }
